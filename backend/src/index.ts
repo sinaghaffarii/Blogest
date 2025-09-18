@@ -8,7 +8,9 @@ import rateLimit from 'express-rate-limit';
 
 import Database from './configs/db';
 import authRoutes from './routes/auth.routes';
+import postRoutes from './routes/post.routes';
 import { swaggerUi, swaggerDocument } from './configs/swagger';
+// import { sanitizeMiddleware } from './middlewares/sanitize';
 
 class Server {
   private app: Application;
@@ -47,6 +49,7 @@ class Server {
 
   private initializeRoutes(): void {
     this.app.use('/api/auth', authRoutes);
+    this.app.use('/api/posts', postRoutes);
     this.app.get('/', (req, res) => res.send('API is running ✅'));
   }
 

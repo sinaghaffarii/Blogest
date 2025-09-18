@@ -14,17 +14,40 @@ import { sendEmail } from '../utils/mailer';
 class AuthController {
   public async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const { email, password } = req.body;
+      const { email, password, name } = req.body;
       const existing = await User.findOne({ email });
       if (existing)
         throw new ApiError(StatusCodes.BAD_REQUEST, 'User already exists');
 
       const hashed = await hashPassword(password);
-      const user = await User.create({ email, password: hashed });
+      const user = await User.create({
+        email,
+        password: hashed,
+        name,
+        role: 'reader',
+        isVerified: false,
+      });
+
+      // Generate verification OTP after registration
+      const otp = generateOtp();
+      const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+      user.otp = otp;
+      user.otpExpires = expires;
+      await user.save();
+
+      try {
+        // Send verification email
+        const subject = 'sinaghaffari18@gmail.com';
+        const message = `Your verification code is: ${otp}. It will expire in 10 minutes.`;
+        await sendEmail(email, subject, message);
+      } catch (emailError) {
+        console.error('Failed to send verification email:', emailError);
+      }
 
       res.status(StatusCodes.CREATED).json({
-        message: 'Registered successfully',
-        user: { id: user._id, email: user.email },
+        message: 'Registered successfully. Please verify your email.',
+        user: { id: user._id, email: user.email, name: user.name },
       });
     } catch (error) {
       next(error);
@@ -37,6 +60,19 @@ class AuthController {
       const user = await User.findOne({ email });
       if (!user)
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid credentials');
+
+      // Check if user is verified
+      if (!user.isVerified) {
+        throw new ApiError(
+          StatusCodes.UNAUTHORIZED,
+          'Please verify your email first',
+        );
+      }
+
+      // For OAuth users without password
+      if (!user.password) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Please use social login');
+      }
 
       const match = await comparePassword(password, user.password);
       if (!match)
@@ -52,6 +88,12 @@ class AuthController {
         message: 'Login successful',
         accessToken,
         refreshToken,
+        user: {
+          id: user._id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        },
       });
     } catch (error) {
       next(error);
@@ -60,6 +102,9 @@ class AuthController {
 
   public async googleLogin(req: Request, res: Response, next: NextFunction) {
     try {
+      // Implementation for Google OAuth
+      // This would typically handle the OAuth callback
+      // For now, we'll keep it as not implemented
       res
         .status(StatusCodes.NOT_IMPLEMENTED)
         .json({ message: 'Google login not implemented yet' });
@@ -70,6 +115,7 @@ class AuthController {
 
   public async githubLogin(req: Request, res: Response, next: NextFunction) {
     try {
+      // Implementation for GitHub OAuth
       res
         .status(StatusCodes.NOT_IMPLEMENTED)
         .json({ message: 'GitHub login not implemented yet' });
@@ -78,30 +124,40 @@ class AuthController {
     }
   }
 
-  public async requestOtp(req: Request, res: Response, next: NextFunction) {
+  public async requestVerificationOtp(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
     try {
       const { email } = req.body;
       const user = await User.findOne({ email });
       if (!user) throw new ApiError(StatusCodes.NOT_FOUND, 'User not found');
 
-      const otp = generateOtp(); // فرض می‌کنیم 6 رقمی تولید می‌کند
-      const expires = new Date(Date.now() + 5 * 60 * 1000); // 5 دقیقه
+      if (user.isVerified) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Email already verified');
+      }
+
+      const otp = generateOtp();
+      const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
       user.otp = otp;
       user.otpExpires = expires;
       await user.save();
 
-      // ارسال ایمیل
-      const subject = 'Your OTP Code';
-      const message = `Your OTP code is: ${otp}. It will expire in 5 minutes.`;
+      const subject = 'sinaghaffari18@gmail.com';
+      const message = `Your verification code is: ${otp}. It will expire in 10 minutes.`;
       await sendEmail(email, subject, message);
 
-      res.status(StatusCodes.OK).json({ message: 'OTP sent to email' });
+      res
+        .status(StatusCodes.OK)
+        .json({ message: 'Verification OTP sent to email' });
     } catch (error) {
       next(error);
     }
   }
-  public async verifyOtp(req: Request, res: Response, next: NextFunction) {
+
+  public async verifyEmail(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, otp } = req.body;
       const user = await User.findOne({ email });
@@ -114,12 +170,14 @@ class AuthController {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid or expired OTP');
       }
 
-      // پاک کردن OTP بعد از verification
+      user.isVerified = true;
       user.otp = undefined;
       user.otpExpires = undefined;
       await user.save();
 
-      res.status(StatusCodes.OK).json({ message: 'OTP verified' });
+      res
+        .status(StatusCodes.OK)
+        .json({ message: 'Email verified successfully' });
     } catch (error) {
       next(error);
     }
@@ -152,17 +210,15 @@ class AuthController {
       const user = await User.findOne({ email });
       if (!user) throw new ApiError(StatusCodes.NOT_FOUND, 'User not found');
 
-      // تولید OTP جدید برای ریست پسورد
       const otp = generateOtp();
-      const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 دقیقه
+      const expires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
       user.otp = otp;
       user.otpExpires = expires;
       await user.save();
 
-      // ارسال ایمیل
       const subject = 'Password Reset OTP';
-      const message = `Your password reset OTP is: ${otp}. It will expire in 10 minutes.`;
+      const message = `Your password reset code is: ${otp}. It will expire in 10 minutes.`;
       await sendEmail(email, subject, message);
 
       res
@@ -186,10 +242,7 @@ class AuthController {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid or expired OTP');
       }
 
-      // تغییر رمز عبور
       user.password = await hashPassword(newPassword);
-
-      // پاک کردن OTP بعد از استفاده
       user.otp = undefined;
       user.otpExpires = undefined;
 

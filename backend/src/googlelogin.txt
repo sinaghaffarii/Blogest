@@ -1,0 +1,153 @@
+برای تکمیل متود googleLogin در AuthController، از کد提供的 شده ایده گرفته‌ام. ابتدا باید ثبت‌نام در Google Cloud Console را انجام دهید تا client_id و client_secret معتبر دریافت کنید. سپس متود را با توجه به مدل User و منطق برنامه‌نویسی پیاده‌سازی می‌کنم.
+
+مراحل ثبت‌نام در Google Cloud Console برای دریافت OAuth Credentials:
+به Google Cloud Console بروید.
+
+یک پروژه جدید ایجاد کنید یا پروژه موجود را انتخاب کنید.
+
+از منوی کناری، به APIs & Services > Credentials بروید.
+
+روی Create Credentials کلیک کرده و OAuth client ID را انتخاب کنید.
+
+اگر اولین بار است، باید Configure consent screen را تکمیل کنید (نوع External را انتخاب و اطلاعات لازم را پر کنید).
+
+در بخش Application type، Web application را انتخاب کنید.
+
+در بخش Authorized redirect URIs، URIs زیر را اضافه کنید:
+
+http://localhost:3000 (برای توسعه)
+
+http://localhost:8000/api/auth/google/callback (اگر از redirect URI خاصی استفاده می‌کنید)
+
+اما توجه کنید که در کد示例 از postmessage استفاده شده که برای flow خاص frontend به backend است. معمولاً نیازی به اضافه کردن postmessage در redirect URIs نیست.
+
+پس از ایجاد، client_id و client_secret را copy کنید و در فایل .env برنامه خود قرار دهید:
+
+text
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+متود کامل شده googleLogin در AuthController:
+typescript
+import axios from 'axios';
+
+public async googleLogin(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { code } = req.body; // authorization code از frontend دریافت می‌شود
+
+    if (!code) {
+      throw new ApiError(StatusCodes.BAD_REQUEST, 'Authorization code is required');
+    }
+
+    // ارسال code برای دریافت access token به Google
+    const tokenResponse = await axios.post('https://oauth2.googleapis.com/token', {
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: 'postmessage', // برای flow frontend به backend
+      grant_type: 'authorization_code',
+    });
+
+    const { access_token } = tokenResponse.data;
+
+    // دریافت اطلاعات کاربر با access token
+    const userResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+
+    const { sub: googleId, email, name, picture: avatar } = userResponse.data;
+
+    // بررسی وجود کاربر در پایگاه داده
+    let user = await User.findOne({ email });
+    if (user) {
+      // به روز رسانی کاربر موجود
+      if (!user.googleId) user.googleId = googleId;
+      if (!user.isVerified) user.isVerified = true;
+      if (!user.avatar) user.avatar = avatar;
+      if (!user.name) user.name = name;
+      await user.save();
+    } else {
+      // ایجاد کاربر جدید
+      user = await User.create({
+        email,
+        name,
+        avatar,
+        googleId,
+        role: 'reader',
+        isVerified: true,
+      });
+    }
+
+    // تولید JWT tokens
+    const accessToken = generateAccessToken({ id: user._id });
+    const refreshToken = generateRefreshToken({ id: user._id });
+
+    // ذخیره refreshToken در پایگاه داده
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    res.status(StatusCodes.OK).json({
+      message: 'Google login successful',
+      accessToken,
+      refreshToken,
+      user: {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        avatar: user.avatar,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+به روز رسانی Swagger Documentation برای endpoint مربوطه:
+در فایل swagger.yaml، endpoint مربوط به Google login را به صورت زیر به روز کنید:
+
+yaml
+  /auth/google:
+    post:
+      summary: Login with Google
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+              properties:
+                code:
+                  type: string
+                  description: Authorization code from Google
+      responses:
+        '200':
+          description: Google login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+نکات مهم:
+مطمئن شوید که environment variables مربوط به Google credentials را در فایل .env設定 کرده‌اید.
+
+برای frontend، باید از Google Sign-In library استفاده کنید تا code را دریافت و به backend ارسال کنید.
+
+متود githubLogin را می‌توان به طور مشابه پیاده‌سازی کرد، اما برای GitHub باید در GitHub Developer Settings ثبت‌نام کنید.
+
+اگر به راهنمایی بیشتری نیاز دارید، بگویید!

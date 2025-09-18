@@ -2,12 +2,16 @@ openapi: 3.0.0
 info:
   title: Backend API
   version: 1.0.0
+  description: API for authentication and user management
 servers:
   - url: http://localhost:8000/api
+    description: Development server
 paths:
   /auth/register:
     post:
       summary: Register a new user
+      tags:
+        - Authentication
       requestBody:
         required: true
         content:
@@ -16,14 +20,23 @@ paths:
               $ref: '#/components/schemas/RegisterDto'
       responses:
         '201':
-          description: User registered successfully
+          description:
+            User registered successfully. Verification OTP sent to email.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Bad request (e.g., user already exists)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /auth/login:
     post:
       summary: Login user
+      tags:
+        - Authentication
       requestBody:
         required: true
         content:
@@ -37,21 +50,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Email not verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /auth/google:
     post:
       summary: Login with Google
+      tags:
+        - Authentication
       responses:
         '501':
           description: Google login not implemented yet
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
   /auth/github:
     post:
       summary: Login with GitHub
+      tags:
+        - Authentication
       responses:
         '501':
           description: GitHub login not implemented yet
-  /auth/request-otp:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+  /auth/request-verification-otp:
     post:
-      summary: Request OTP for verification
+      summary: Request OTP for email verification
+      tags:
+        - Authentication
       requestBody:
         required: true
         content:
@@ -65,9 +104,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
-  /auth/verify-otp:
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '400':
+          description: Email already verified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /auth/verify-email:
     post:
-      summary: Verify OTP
+      summary: Verify email using OTP
+      tags:
+        - Authentication
       requestBody:
         required: true
         content:
@@ -76,14 +129,22 @@ paths:
               $ref: '#/components/schemas/VerifyOtpDto'
       responses:
         '200':
-          description: OTP verified successfully
+          description: Email verified successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Invalid or expired OTP
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /auth/refresh-token:
     post:
       summary: Refresh access token
+      tags:
+        - Authentication
       requestBody:
         required: true
         content:
@@ -97,9 +158,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RefreshTokenResponse'
+        '401':
+          description: Invalid refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /auth/forgot-password:
     post:
       summary: Request OTP for password reset
+      tags:
+        - Authentication
       requestBody:
         required: true
         content:
@@ -113,9 +182,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /auth/reset-password:
     post:
       summary: Reset password using OTP
+      tags:
+        - Authentication
       requestBody:
         required: true
         content:
@@ -129,9 +206,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Invalid or expired OTP
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /auth/logout:
     post:
       summary: Logout user
+      tags:
+        - Authentication
       security:
         - bearerAuth: []
       responses:
@@ -141,6 +226,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   securitySchemes:
@@ -158,9 +249,14 @@ components:
         email:
           type: string
           format: email
+          example: user@example.com
         password:
           type: string
           format: password
+          example: password123
+        name:
+          type: string
+          example: John Doe
     LoginDto:
       type: object
       required:
@@ -170,9 +266,11 @@ components:
         email:
           type: string
           format: email
+          example: user@example.com
         password:
           type: string
           format: password
+          example: password123
     EmailDto:
       type: object
       required:
@@ -181,6 +279,7 @@ components:
         email:
           type: string
           format: email
+          example: user@example.com
     VerifyOtpDto:
       type: object
       required:
@@ -190,8 +289,10 @@ components:
         email:
           type: string
           format: email
+          example: user@example.com
         otp:
           type: string
+          example: 123456
     ResetPasswordDto:
       type: object
       required:
@@ -202,32 +303,59 @@ components:
         email:
           type: string
           format: email
+          example: user@example.com
         otp:
           type: string
+          example: 123456
         newPassword:
           type: string
           format: password
+          example: newpassword123
     AuthResponse:
       type: object
       properties:
         message:
           type: string
+          example: Registered successfully. Please verify your email.
         user:
           type: object
           properties:
             id:
               type: string
+              example: 507f1f77bcf86cd799439011
             email:
               type: string
+              example: user@example.com
+            name:
+              type: string
+              example: John Doe
     LoginResponse:
       type: object
       properties:
         message:
           type: string
+          example: Login successful
         accessToken:
           type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
         refreshToken:
           type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 507f1f77bcf86cd799439011
+            email:
+              type: string
+              example: user@example.com
+            name:
+              type: string
+              example: John Doe
+            role:
+              type: string
+              example: reader
     RefreshTokenDto:
       type: object
       required:
@@ -235,15 +363,31 @@ components:
       properties:
         refreshToken:
           type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
     RefreshTokenResponse:
       type: object
       properties:
         message:
           type: string
+          example: Token refreshed
         accessToken:
           type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
     MessageResponse:
       type: object
       properties:
         message:
           type: string
+          example: OTP sent to email
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Invalid credentials
+        message:
+          type: string
+          example: Detailed error description
+        statusCode:
+          type: integer
+          example: 400

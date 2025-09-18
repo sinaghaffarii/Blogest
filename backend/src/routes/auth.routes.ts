@@ -7,8 +7,10 @@ router.post('/register', authController.register.bind(authController));
 router.post('/login', authController.login.bind(authController));
 router.post('/google', authController.googleLogin.bind(authController));
 router.post('/github', authController.githubLogin.bind(authController));
-router.post('/request-otp', authController.requestOtp.bind(authController));
-router.post('/verify-otp', authController.verifyOtp.bind(authController));
+router.post(
+  '/request-verify-otp',
+  authController.requestVerificationOtp.bind(authController),
+);
 router.post('/refresh-token', authController.refreshToken.bind(authController));
 router.post(
   '/forgot-password',
