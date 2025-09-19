@@ -22,7 +22,9 @@ class InteractionController {
         await Post.findByIdAndUpdate(postId, { $inc: { likesCount: 1 } });
         return res.status(StatusCodes.CREATED).json({ message: 'Liked' });
       }
-    } catch (err) { next(err); }
+    } catch (err) {
+      next(err);
+    }
   }
 }
 

@@ -44,13 +44,13 @@ class AuthController {
         await sendEmail(
           email,
           'Email Verification',
-          `Your verification code is: ${otp}. It will expire in 10 minutes.`
+          `Your verification code is: ${otp}. It will expire in 10 minutes.`,
         );
       } catch (err) {
         await User.findByIdAndDelete(user._id);
         throw new ApiError(
           StatusCodes.INTERNAL_SERVER_ERROR,
-          'Failed to send verification email'
+          'Failed to send verification email',
         );
       }
 
@@ -71,7 +71,10 @@ class AuthController {
       }
 
       if (!user.isVerified) {
-        throw new ApiError(StatusCodes.UNAUTHORIZED, 'Please verify your email first');
+        throw new ApiError(
+          StatusCodes.UNAUTHORIZED,
+          'Please verify your email first',
+        );
       }
 
       if (!user.password) {
@@ -114,7 +117,8 @@ class AuthController {
       const user = await User.findOne({ email });
 
       if (!user) throw new ApiError(StatusCodes.BAD_REQUEST, 'User not found');
-      if (user.otp !== otp) throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid OTP');
+      if (user.otp !== otp)
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid OTP');
       if (user.otpExpires && user.otpExpires < new Date()) {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'OTP expired');
       }
@@ -124,7 +128,9 @@ class AuthController {
       user.otpExpires = undefined;
       await user.save();
 
-      res.status(StatusCodes.OK).json({ message: 'Email verified successfully' });
+      res
+        .status(StatusCodes.OK)
+        .json({ message: 'Email verified successfully' });
     } catch (error) {
       next(error);
     }
@@ -207,10 +213,12 @@ class AuthController {
       await sendEmail(
         email,
         'Password Reset OTP',
-        `Your password reset code is: ${otp}. It will expire in 10 minutes.`
+        `Your password reset code is: ${otp}. It will expire in 10 minutes.`,
       );
 
-      res.status(StatusCodes.OK).json({ message: 'OTP sent to email for password reset' });
+      res
+        .status(StatusCodes.OK)
+        .json({ message: 'OTP sent to email for password reset' });
     } catch (error) {
       next(error);
     }
@@ -221,7 +229,8 @@ class AuthController {
       const user = await User.findOne({ email });
 
       if (!user) throw new ApiError(StatusCodes.BAD_REQUEST, 'User not found');
-      if (user.otp !== otp) throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid OTP');
+      if (user.otp !== otp)
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid OTP');
       if (user.otpExpires && user.otpExpires < new Date()) {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'OTP expired');
       }
