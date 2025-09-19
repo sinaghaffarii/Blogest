@@ -86,36 +86,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MessageResponse'
-  /auth/request-verification-otp:
-    post:
-      summary: Request OTP for email verification
-      tags:
-        - Authentication
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmailDto'
-      responses:
-        '200':
-          description: OTP sent successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MessageResponse'
-        '404':
-          description: User not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '400':
-          description: Email already verified
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
   /auth/verify-email:
     post:
       summary: Verify email using OTP
