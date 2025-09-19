@@ -5,11 +5,13 @@ import cors from 'cors';
 import compression from 'compression';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
 
 import Database from './configs/db';
 import authRoutes from './routes/auth.routes';
 import postRoutes from './routes/post.routes';
 import { swaggerUi, swaggerDocument } from './configs/swagger';
+import { errorHandler } from './middlewares/errorHandler';
 // import { sanitizeMiddleware } from './middlewares/sanitize';
 
 class Server {
@@ -34,6 +36,7 @@ class Server {
   private initializeMiddlewares(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cookieParser());
     this.app.use(helmet());
     this.app.use(cors());
     this.app.use(compression());
@@ -62,17 +65,7 @@ class Server {
   }
 
   private initializeErrorHandling(): void {
-    this.app.use(
-      (
-        err: any,
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction,
-      ) => {
-        console.error(err.stack);
-        res.status(500).json({ message: 'Internal Server Error' });
-      },
-    );
+    this.app.use(errorHandler);
   }
 
   public listen(): void {
