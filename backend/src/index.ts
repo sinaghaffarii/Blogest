@@ -38,7 +38,19 @@ class Server {
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(helmet());
-    this.app.use(cors());
+
+    // CORS Configuration
+    const corsOptions = {
+      origin:
+        process.env.NODE_ENV === 'production'
+          ? ['https://yourdomain.com']
+          : ['http://localhost:3000', 'http://192.168.56.1:3000'],
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    };
+
+    this.app.use(cors(corsOptions));
     this.app.use(compression());
     this.app.use(morgan('dev'));
     this.app.use(

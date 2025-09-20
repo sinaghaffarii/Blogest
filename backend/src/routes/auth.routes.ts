@@ -23,10 +23,10 @@ router.post(
   authenticateToken,
   authController.logout.bind(authController),
 );
-  router.get(
-    '/check',
-    authenticateToken,
-    authController.checkAuth.bind(authController),
-  );
+router.get(
+  '/check',
+  authenticateToken,
+  authController.checkAuth.bind(authController),
+);
 
 export default router;

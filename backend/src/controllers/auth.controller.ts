@@ -99,6 +99,7 @@ class AuthController {
       setRefreshTokenCookie(res, refreshToken);
 
       res.status(StatusCodes.OK).json({
+        status: true,
         message: 'Login successful',
         user: {
           id: user._id,
