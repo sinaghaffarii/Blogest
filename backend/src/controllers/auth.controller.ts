@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/user.model';
+import User, { IUser } from '../models/user.model';
 import { hashPassword, comparePassword } from '../utils/hash';
 import {
   clearAuthCookies,
@@ -99,6 +99,7 @@ class AuthController {
       setRefreshTokenCookie(res, refreshToken);
 
       res.status(StatusCodes.OK).json({
+        status: true,
         message: 'Login successful',
         user: {
           id: user._id,
@@ -262,6 +263,28 @@ class AuthController {
     } catch (error) {
       next(error);
     }
+  }
+  public async checkAuth(req: Request, res: Response) {
+    if (!req.user) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        status: false,
+        message: 'User is not authenticated',
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      status: true,
+      message: 'User is authenticated',
+      data: {
+        _id: '68cd31fbed8ea9329c2782fa',
+        email: 'sinaghafari.dev@gmail.com',
+        name: 'Sina Dev',
+        role: 'reader',
+        isVerified: true,
+        createdAt: '2025-09-19T10:35:39.141Z',
+        updatedAt: '2025-09-19T13:30:45.686Z',
+      },
+    });
   }
 }
 

@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+
 import './globals.css';
+import Providers from './provider';
 
 export const metadata: Metadata = {
-  title: 'Blogify',
+  title: 'Blogest',
   description: 'Generated Blog By AI',
 };
 
@@ -12,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
-      <body className={'antialiased'}>{children}</body>
+    <html dir="rtl" lang="fa">
+      <body className="antialiased">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
