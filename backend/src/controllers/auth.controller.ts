@@ -55,6 +55,7 @@ class AuthController {
       }
 
       res.status(StatusCodes.CREATED).json({
+        status: true,
         message: 'Registered successfully. Please verify your email.',
         user: { id: user._id, email: user.email, name: user.name },
       });
@@ -67,7 +68,7 @@ class AuthController {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
       if (!user) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid credentials');
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'User not found!');
       }
 
       if (!user.isVerified) {
@@ -83,7 +84,7 @@ class AuthController {
 
       const match = await comparePassword(password, user.password);
       if (!match) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid credentials');
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'email or password is incorrect');
       }
 
       // ساخت توکن‌ها
@@ -131,7 +132,7 @@ class AuthController {
 
       res
         .status(StatusCodes.OK)
-        .json({ message: 'Email verified successfully' });
+        .json({ status: true, message: 'Email verified successfully' });
     } catch (error) {
       next(error);
     }
@@ -217,9 +218,10 @@ class AuthController {
         `Your password reset code is: ${otp}. It will expire in 10 minutes.`,
       );
 
-      res
-        .status(StatusCodes.OK)
-        .json({ message: 'OTP sent to email for password reset' });
+      res.status(StatusCodes.OK).json({
+        status: true,
+        message: 'OTP sent to email for password reset',
+      });
     } catch (error) {
       next(error);
     }
@@ -241,7 +243,9 @@ class AuthController {
       user.otpExpires = undefined;
       await user.save();
 
-      res.status(StatusCodes.OK).json({ message: 'Password reset successful' });
+      res
+        .status(StatusCodes.OK)
+        .json({ status: true, message: 'Password reset successful' });
     } catch (error) {
       next(error);
     }
@@ -259,7 +263,9 @@ class AuthController {
       }
 
       clearAuthCookies(res);
-      res.status(StatusCodes.OK).json({ message: 'Logout successful' });
+      res
+        .status(StatusCodes.OK)
+        .json({ status: true, message: 'Logout successful' });
     } catch (error) {
       next(error);
     }
@@ -275,15 +281,7 @@ class AuthController {
     return res.status(StatusCodes.OK).json({
       status: true,
       message: 'User is authenticated',
-      data: {
-        _id: '68cd31fbed8ea9329c2782fa',
-        email: 'sinaghafari.dev@gmail.com',
-        name: 'Sina Dev',
-        role: 'reader',
-        isVerified: true,
-        createdAt: '2025-09-19T10:35:39.141Z',
-        updatedAt: '2025-09-19T13:30:45.686Z',
-      },
+      data: req.user,
     });
   }
 }

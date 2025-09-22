@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 
 import './globals.css';
+import 'aos/dist/aos.css';
+
 import Providers from './provider';
 
 export const metadata: Metadata = {

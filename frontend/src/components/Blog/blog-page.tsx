@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
@@ -11,10 +12,12 @@ export default function BlogPage() {
     <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="relative h-[400px] overflow-hidden rounded-lg shadow-lg md:h-[500px] lg:col-span-2">
-          <img
+          <Image
+            height={400}
+            width={600}
             alt="Unlocking Business Efficiency with SaaS Solutions"
             className="w-full object-cover"
-            src="https://placehold.co/600x400?text=."
+            src="/vercel.svg"
           />
           <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
             <Badge className="mb-2 w-fit bg-white/20 text-white backdrop-blur-sm">

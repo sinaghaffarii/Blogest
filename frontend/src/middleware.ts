@@ -8,17 +8,19 @@ export function middleware(req: NextRequest) {
 
   if (!isAuth && url.pathname.startsWith('/dashboard')) {
     url.pathname = '/login';
-    return NextResponse.redirect(url);
+    const redirectResponse = NextResponse.redirect(url);
+    redirectResponse.headers.set('x-middleware-cache', 'no-cache');
+    return redirectResponse;
   }
 
   if (isAuth && url.pathname === '/login') {
     url.pathname = '/dashboard';
-    return NextResponse.redirect(url);
+    const redirectResponse = NextResponse.redirect(url);
+    redirectResponse.headers.set('x-middleware-cache', 'no-cache');
+    return redirectResponse;
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  response.headers.set('x-middleware-cache', 'no-cache');
+  return response;
 }
-
-export const config = {
-  matcher: ['/dashboard/:path*', '/login'],
-};
