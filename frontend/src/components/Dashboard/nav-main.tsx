@@ -37,7 +37,7 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>پنل مدیریتی</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible asChild defaultOpen={item.isActive} key={item.title}>

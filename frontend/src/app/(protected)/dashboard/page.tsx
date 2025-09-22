@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 
-import { AppSidebar } from '@/components/app-sidebar';
+import { AppSidebar } from '@/components/Dashboard/app-sidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -34,12 +34,12 @@ export default function Page() {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink className="capitalize" href={`${pathname}`}>
-                    {pathname.split('/')[1] || 'Dashboard'}
+                    {pathname.split('/')[1] || 'داشبورد'}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  <BreadcrumbPage>گزارشات</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

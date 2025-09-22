@@ -291,6 +291,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<'button'>) {
       data-sidebar="rail"
       tabIndex={-1}
       title="Toggle Sidebar"
+      type="button"
       data-slot="sidebar-rail"
       onClick={toggleSidebar}
       className={cn(
@@ -531,6 +532,7 @@ function SidebarMenuButton({
   }
 
   if (typeof tooltip === 'string') {
+    // eslint-disable-next-line no-param-reassign
     tooltip = {
       children: tooltip,
     };
@@ -611,9 +613,7 @@ function SidebarMenuSkeleton({
   showIcon?: boolean;
 }) {
   // Random width between 50 to 90%.
-  const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`;
-  }, []);
+  const width = `${Math.floor(Math.random() * 40) + 50}%`;
 
   return (
     <div
