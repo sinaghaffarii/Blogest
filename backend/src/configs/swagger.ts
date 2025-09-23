@@ -35,6 +35,7 @@ const loadSwaggerDocument = () => {
       info: { title: 'Blog API', version: '1.0.0' },
       paths: {},
       components: { schemas: {} },
+      servers: [],
     };
 
     swaggerFiles.forEach((file) => {
@@ -44,6 +45,11 @@ const loadSwaggerDocument = () => {
       if (spec.paths) Object.assign(combinedSpec.paths, spec.paths);
       if (spec.components?.schemas)
         Object.assign(combinedSpec.components.schemas, spec.components.schemas);
+      if (spec.servers) {
+        combinedSpec.servers = (combinedSpec.servers || []).concat(
+          spec.servers,
+        );
+      }
     });
 
     return combinedSpec;
