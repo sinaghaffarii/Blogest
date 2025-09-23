@@ -84,7 +84,10 @@ class AuthController {
 
       const match = await comparePassword(password, user.password);
       if (!match) {
-        throw new ApiError(StatusCodes.BAD_REQUEST, 'email or password is incorrect');
+        throw new ApiError(
+          StatusCodes.BAD_REQUEST,
+          'email or password is incorrect',
+        );
       }
 
       // ساخت توکن‌ها

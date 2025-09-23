@@ -12,7 +12,6 @@ import authRoutes from './routes/auth.routes';
 import postRoutes from './routes/post.routes';
 import { swaggerUi, swaggerDocument } from './configs/swagger';
 import { errorHandler } from './middlewares/errorHandler';
-// import { sanitizeMiddleware } from './middlewares/sanitize';
 
 class Server {
   private app: Application;
@@ -26,7 +25,7 @@ class Server {
     this.initializeMiddlewares();
     this.initializeRoutes();
     this.initializeSwagger();
-    this.initializeErrorHandling();
+    this.initializeErrorHandling(); // 🔥 باید بعد از routes بیاد
   }
 
   private async initializeDatabase(): Promise<void> {
@@ -39,7 +38,6 @@ class Server {
     this.app.use(cookieParser());
     this.app.use(helmet());
 
-    // CORS Configuration
     const corsOptions = {
       origin:
         process.env.NODE_ENV === 'production'
@@ -59,7 +57,6 @@ class Server {
         max: 100,
       }),
     );
-    // this.app.use(sanitizeMiddleware);
   }
 
   private initializeRoutes(): void {
@@ -72,7 +69,11 @@ class Server {
     this.app.use(
       '/api-docs',
       swaggerUi.serve,
-      swaggerUi.setup(swaggerDocument),
+      swaggerUi.setup(swaggerDocument, {
+        swaggerOptions: {
+          deepLinking: false,
+        },
+      }),
     );
   }
 
@@ -82,7 +83,10 @@ class Server {
 
   public listen(): void {
     this.app.listen(this.port, () => {
-      console.log(`🚀 Server running on port ${this.port}`);
+      console.log(`
+        🚀 http://localhost:8000/api-docs
+        🚀 Server running on port ${this.port}
+      `);
     });
   }
 }

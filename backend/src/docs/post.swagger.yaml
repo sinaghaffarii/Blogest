@@ -1,0 +1,553 @@
+openapi: 3.0.0
+info:
+  title: Blog API
+  version: 1.0.0
+  description: API for blog post management
+servers:
+  - url: http://localhost:8000/api
+    description: Development server
+
+paths:
+  /posts/create:
+    post:
+      summary: Create a new post
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostDto'
+      responses:
+        '201':
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request (e.g., slug already exists)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/getList:
+    get:
+      summary: Get list of posts with filters
+      tags:
+        - Posts
+      parameters:
+        - name: category
+          in: query
+          description: Filter by category
+          schema:
+            type: string
+          example: technology
+        - name: author
+          in: query
+          description: Filter by author ID
+          schema:
+            type: string
+          example: 507f1f77bcf86cd799439011
+        - name: q
+          in: query
+          description: Search query (searches in title and content)
+          schema:
+            type: string
+          example: javascript
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            default: 1
+          example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            default: 10
+          example: 10
+        - name: sortBy
+          in: query
+          description: Field to sort by
+          schema:
+            type: string
+            enum: [createdAt, updatedAt, publishedAt, title, likesCount]
+            default: createdAt
+          example: createdAt
+        - name: sortOrder
+          in: query
+          description: Sort order
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+          example: desc
+      responses:
+        '200':
+          description: List of posts retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostListResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/getById/{id}:
+    get:
+      summary: Get post by ID
+      tags:
+        - Posts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Post ID
+          schema:
+            type: string
+          example: 507f1f77bcf86cd799439011
+      responses:
+        '200':
+          description: Post retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Invalid post ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/update/{id}:
+    put:
+      summary: Update a post by ID
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Post ID
+          schema:
+            type: string
+          example: 507f1f77bcf86cd799439011
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePostDto'
+      responses:
+        '200':
+          description: Post updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request (e.g., invalid ID, slug exists)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/delete/{id}:
+    delete:
+      summary: Delete a post by ID
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Post ID
+          schema:
+            type: string
+          example: 507f1f77bcf86cd799439011
+      responses:
+        '200':
+          description: Post deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Invalid post ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/getBySlub/slug/{slug}:
+    get:
+      summary: Get post by slug
+      tags:
+        - Posts
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Post slug
+          schema:
+            type: string
+          example: my-first-blog-post
+      responses:
+        '200':
+          description: Post retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/getByCategory/category/{category}:
+    get:
+      summary: Get posts by category
+      tags:
+        - Posts
+      parameters:
+        - name: category
+          in: path
+          required: true
+          description: Category name
+          schema:
+            type: string
+          example: technology
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+            default: 1
+          example: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          schema:
+            type: integer
+            default: 10
+          example: 10
+      responses:
+        '200':
+          description: Posts retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostListResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/like/{id}/like:
+    patch:
+      summary: Like a post
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Post ID
+          schema:
+            type: string
+          example: 507f1f77bcf86cd799439011
+      responses:
+        '200':
+          description: Post liked successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LikeResponse'
+        '400':
+          description: Invalid post ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /posts/incrementCommentsCount/{id}/comment:
+    patch:
+      summary: Increment post comments count
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Post ID
+          schema:
+            type: string
+          example: 507f1f77bcf86cd799439011
+      responses:
+        '200':
+          description: Comment count incremented successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentCountResponse'
+        '400':
+          description: Invalid post ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    CreatePostDto:
+      type: object
+      required:
+        - title
+        - contentHtml
+        - plainText
+      properties:
+        title:
+          type: string
+          example: 'My First Blog Post'
+          minLength: 1
+          maxLength: 200
+        contentHtml:
+          type: string
+          example: '<p>This is the content of my blog post</p>'
+        plainText:
+          type: string
+          example: 'This is the content of my blog post'
+        excerpt:
+          type: string
+          example: 'A brief summary of the blog post'
+          maxLength: 300
+        categories:
+          type: array
+          items:
+            type: string
+          example: ['technology', 'programming']
+        coverImage:
+          type: string
+          format: uri
+          example: 'https://example.com/image.jpg'
+        published:
+          type: boolean
+          example: true
+          default: false
+    UpdatePostDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: 'Updated Blog Post Title'
+          minLength: 1
+          maxLength: 200
+        contentHtml:
+          type: string
+          example: '<p>Updated content of my blog post</p>'
+        plainText:
+          type: string
+          example: 'Updated content of my blog post'
+        excerpt:
+          type: string
+          example: 'Updated brief summary'
+          maxLength: 300
+        categories:
+          type: array
+          items:
+            type: string
+          example: ['technology', 'web-development']
+        coverImage:
+          type: string
+          format: uri
+          example: 'https://example.com/updated-image.jpg'
+        published:
+          type: boolean
+          example: true
+    PostResponse:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 507f1f77bcf86cd799439011
+        author:
+          type: object
+          properties:
+            _id:
+              type: string
+            name:
+              type: string
+            email:
+              type: string
+        title:
+          type: string
+        slug:
+          type: string
+        contentHtml:
+          type: string
+        plainText:
+          type: string
+        excerpt:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        coverImage:
+          type: string
+        likesCount:
+          type: integer
+        commentsCount:
+          type: integer
+        published:
+          type: boolean
+        publishedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PostListResponse:
+      type: object
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PostResponse'
+        pagination:
+          type: object
+          properties:
+            current:
+              type: integer
+              example: 1
+            total:
+              type: integer
+              example: 5
+            items:
+              type: integer
+              example: 47
+            hasNext:
+              type: boolean
+              example: true
+            hasPrev:
+              type: boolean
+              example: false
+    LikeResponse:
+      type: object
+      properties:
+        likesCount:
+          type: integer
+          example: 15
+    CommentCountResponse:
+      type: object
+      properties:
+        commentsCount:
+          type: integer
+          example: 8
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Post deleted successfully'
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: 'Invalid post ID'
+        message:
+          type: string
+          example: 'The provided post ID is not valid'
+        statusCode:
+          type: integer
+          example: 400
