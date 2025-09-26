@@ -28,5 +28,4 @@ router.get(
   authenticateToken,
   authController.checkAuth.bind(authController),
 );
-
 export default router;

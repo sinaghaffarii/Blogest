@@ -11,7 +11,7 @@ router.get(
   postController.getBySlug.bind(postController),
 );
 router.get(
-  '/getByCategory/category/:category',
+  '/getByCategory/:category',
   postController.getByCategory.bind(postController),
 );
 router.get('/getById/:id', postController.getById.bind(postController));

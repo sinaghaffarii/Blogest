@@ -81,3 +81,14 @@ export const optionalAuth = async (
     next(error);
   }
 };
+
+export const authorizeSelfOrAdmin = () => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const user = (req as any).user;
+
+    if (user.role === 'admin') return next();
+    if (user._id.toString() === req.params.id) return next();
+
+    return next(new ApiError(StatusCodes.FORBIDDEN, 'Access denied'));
+  };
+};

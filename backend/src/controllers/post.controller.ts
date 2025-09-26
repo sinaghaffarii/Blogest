@@ -30,7 +30,9 @@ class PostController {
       // Check if slug already exists
       const existingPost = await Post.findOne({ slug });
       if (existingPost) {
-        return res.status(400).json({ error: 'Slug already exists' });
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ error: 'Slug already exists' });
       }
 
       const postData: Partial<IPost> = {
@@ -50,7 +52,7 @@ class PostController {
       await post.save();
 
       await post.populate('author', 'name email');
-      res.status(201).json(post);
+      res.status(StatusCodes.OK).json(post);
     } catch (error) {
       next(error);
     }
@@ -65,7 +67,9 @@ class PostController {
       const updates = req.body;
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: 'Invalid post ID' });
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ error: 'Invalid post ID' });
       }
 
       // Handle slug generation if title is being updated
@@ -82,7 +86,9 @@ class PostController {
           _id: { $ne: id },
         });
         if (existingPost) {
-          return res.status(400).json({ error: 'Slug already exists' });
+          return res
+            .status(StatusCodes.BAD_REQUEST)
+            .json({ error: 'Slug already exists' });
         }
       }
 
@@ -100,7 +106,9 @@ class PostController {
       ).populate('author', 'name email');
 
       if (!post) {
-        return res.status(404).json({ error: 'Post not found' });
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Post not found' });
       }
 
       res.json(post);
@@ -135,7 +143,9 @@ class PostController {
       // Author filter
       if (author) {
         if (!mongoose.Types.ObjectId.isValid(author as string)) {
-          return res.status(400).json({ error: 'Invalid author ID' });
+          return res
+            .status(StatusCodes.BAD_REQUEST)
+            .json({ error: 'Invalid author ID' });
         }
         filter.author = author;
       }
@@ -196,7 +206,9 @@ class PostController {
       );
 
       if (!post) {
-        return res.status(404).json({ error: 'Post not found' });
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Post not found' });
       }
 
       res.json(post);
@@ -213,13 +225,17 @@ class PostController {
       const { id } = req.params;
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: 'Invalid post ID' });
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ status: false, error: 'Invalid post ID' });
       }
 
       const post = await Post.findById(id).populate('author', 'name email');
 
       if (!post) {
-        return res.status(404).json({ error: 'Post not found' });
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ status: false, error: 'Post not found' });
       }
 
       res.json(post);
@@ -236,16 +252,20 @@ class PostController {
       const { id } = req.params;
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: 'Invalid post ID' });
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ error: 'Invalid post ID' });
       }
 
       const post = await Post.findByIdAndDelete(id);
 
       if (!post) {
-        return res.status(404).json({ error: 'Post not found' });
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Post not found' });
       }
 
-      res.json({ message: 'Post deleted successfully' });
+      res.json({ status: true, message: 'Post deleted successfully' });
     } catch (error) {
       next(error);
       // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -262,7 +282,9 @@ class PostController {
       const { id } = req.params;
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: 'Invalid post ID' });
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ error: 'Invalid post ID' });
       }
 
       const post = await Post.findByIdAndUpdate(
@@ -272,7 +294,9 @@ class PostController {
       );
 
       if (!post) {
-        return res.status(404).json({ error: 'Post not found' });
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Post not found' });
       }
 
       res.json({ likesCount: post.likesCount });
@@ -293,7 +317,9 @@ class PostController {
       const { id } = req.params;
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: 'Invalid post ID' });
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ error: 'Invalid post ID' });
       }
 
       const post = await Post.findByIdAndUpdate(
@@ -303,7 +329,9 @@ class PostController {
       );
 
       if (!post) {
-        return res.status(404).json({ error: 'Post not found' });
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ error: 'Post not found' });
       }
 
       res.json({ commentsCount: post.commentsCount });
