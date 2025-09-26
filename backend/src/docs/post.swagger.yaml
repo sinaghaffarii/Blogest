@@ -257,7 +257,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /posts/getByCategory/category/{category}:
+  /posts/getByCategory/{category}:
     get:
       summary: Get posts by category
       tags:
@@ -379,11 +379,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   schemas:
     CreatePostDto:
       type: object
@@ -534,20 +529,6 @@ components:
           type: integer
           example: 8
     MessageResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: 'Post deleted successfully'
+      $ref: '#/components/schemas/MessageResponse'
     ErrorResponse:
-      type: object
-      properties:
-        error:
-          type: string
-          example: 'Invalid post ID'
-        message:
-          type: string
-          example: 'The provided post ID is not valid'
-        statusCode:
-          type: integer
-          example: 400
+      $ref: '#/components/schemas/ErrorResponse'

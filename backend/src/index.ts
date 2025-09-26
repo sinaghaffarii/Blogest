@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import Database from './configs/db';
 import authRoutes from './routes/auth.routes';
 import postRoutes from './routes/post.routes';
+import userRoutes from './routes/user.routes';
 import { swaggerUi, swaggerDocument } from './configs/swagger';
 import { errorHandler } from './middlewares/errorHandler';
 
@@ -62,6 +63,7 @@ class Server {
   private initializeRoutes(): void {
     this.app.use('/api/auth', authRoutes);
     this.app.use('/api/posts', postRoutes);
+    this.app.use('/api/users', userRoutes);
     this.app.get('/', (req, res) => res.send('API is running ✅'));
   }
 

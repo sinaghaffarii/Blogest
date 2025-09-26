@@ -3,67 +3,83 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'yaml';
 
-// پیدا کردن فایل‌های swagger به صورت مستقیم
-const findSwaggerFiles = () => {
-  const possibleDirs = [
-    path.join(__dirname, '../docs'),
-    path.join(__dirname, '../../src/docs'),
-    path.join(process.cwd(), 'src/docs'),
-  ];
+class SwaggerMerger {
+  private docsDir: string;
 
-  for (const dir of possibleDirs) {
-    if (fs.existsSync(dir)) {
-      const files = fs
-        .readdirSync(dir)
-        .filter((file) => file.endsWith('.swagger.yaml'))
-        .map((file) => path.join(dir, file));
-
-      if (files.length > 0) {
-        return files;
-      }
-    }
+  constructor() {
+    this.docsDir = path.join(process.cwd(), 'src/docs');
   }
 
-  throw new Error('No swagger files found');
-};
+  private findSwaggerFiles(): string[] {
+    if (!fs.existsSync(this.docsDir)) return [];
+    return fs
+      .readdirSync(this.docsDir)
+      .filter((file) => file.endsWith('.yaml') || file.endsWith('.yml'))
+      .map((file) => path.join(this.docsDir, file));
+  }
 
-const loadSwaggerDocument = () => {
-  try {
-    const swaggerFiles = findSwaggerFiles();
-    let combinedSpec = {
+  private loadAndParseFiles(): any[] {
+    return this.findSwaggerFiles().map((file) => {
+      const content = fs.readFileSync(file, 'utf8');
+      return yaml.parse(content);
+    });
+  }
+
+  private deepMerge(target: any, source: any): any {
+    if (source === null || typeof source !== 'object') return source;
+    if (Array.isArray(source)) return [...source];
+
+    const result = { ...target };
+    for (const [key, value] of Object.entries(source)) {
+      result[key] =
+        value && typeof value === 'object' && !Array.isArray(value)
+          ? this.deepMerge(result[key] || {}, value)
+          : value;
+    }
+    return result;
+  }
+
+  public generateSwaggerDocument(): any {
+    const files = this.loadAndParseFiles();
+
+    const baseSpec: any = {
       openapi: '3.0.0',
-      info: { title: 'Blog API', version: '1.0.0' },
+      info: {
+        title: 'Backend API',
+        version: '1.0.0',
+        description: 'API Documentation',
+      },
+      servers: [
+        { url: 'http://localhost:8000/api', description: 'Local Server' },
+      ],
       paths: {},
-      components: { schemas: {} },
-      servers: [],
+      components: { schemas: {}, securitySchemes: {} },
     };
 
-    swaggerFiles.forEach((file) => {
-      const content = fs.readFileSync(file, 'utf8');
-      const spec = yaml.parse(content);
-
-      if (spec.paths) Object.assign(combinedSpec.paths, spec.paths);
-      if (spec.components?.schemas)
-        Object.assign(combinedSpec.components.schemas, spec.components.schemas);
-      if (spec.servers) {
-        combinedSpec.servers = (combinedSpec.servers || []).concat(
-          spec.servers,
+    for (const spec of files) {
+      if (spec.components?.securitySchemes) {
+        baseSpec.components.securitySchemes = this.deepMerge(
+          baseSpec.components.securitySchemes,
+          spec.components.securitySchemes,
         );
       }
-    });
+      if (spec.components?.schemas) {
+        baseSpec.components.schemas = this.deepMerge(
+          baseSpec.components.schemas,
+          spec.components.schemas,
+        );
+      }
+      if (spec.paths) {
+        baseSpec.paths = this.deepMerge(baseSpec.paths, spec.paths);
+      }
+    }
 
-    return combinedSpec;
-  } catch (error) {
-    console.error('Error loading swagger:', error);
-    // Fallback spec
-    return {
-      openapi: '3.0.0',
-      info: { title: 'Blog API', version: '1.0.0' },
-      paths: {},
-      components: {},
-    };
+    baseSpec.security = [{ bearerAuth: [] }];
+    return baseSpec;
   }
-};
+}
 
-const swaggerDocument = loadSwaggerDocument();
+const swaggerMerger = new SwaggerMerger();
+const swaggerDocument = swaggerMerger.generateSwaggerDocument();
+
 export { swaggerUi, swaggerDocument };

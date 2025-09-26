@@ -1,0 +1,28 @@
+openapi: 3.0.0
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Operation successful
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Unauthorized
+        message:
+          type: string
+          example: Invalid or expired token
+        statusCode:
+          type: integer
+          example: 401
