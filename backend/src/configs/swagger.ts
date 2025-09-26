@@ -14,7 +14,7 @@ class SwaggerMerger {
     if (!fs.existsSync(this.docsDir)) return [];
     return fs
       .readdirSync(this.docsDir)
-      .filter((file) => file.endsWith('.yaml') || file.endsWith('.yml'))
+      .filter((file) => file.endsWith('.yaml'))
       .map((file) => path.join(this.docsDir, file));
   }
 
