@@ -225,7 +225,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-  /posts/getBySlub/slug/{slug}:
+  /posts/getBySlug/slug/{slug}:
     get:
       summary: Get post by slug
       tags:

@@ -7,7 +7,7 @@ const router = express.Router();
 //Public routes
 router.get('/getList', postController.getList.bind(postController));
 router.get(
-  '/getBySlub/slug/:slug',
+  '/getBySlug/slug/:slug',
   postController.getBySlug.bind(postController),
 );
 router.get(
