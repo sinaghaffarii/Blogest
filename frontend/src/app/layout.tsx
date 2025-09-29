@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
-import './globals.css';
-import 'aos/dist/aos.css';
+import { ThemeProvider } from '@/components/theme-provider';
 
 import Providers from './provider';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Blogest',
@@ -18,7 +18,14 @@ export default function RootLayout({
   return (
     <html dir="rtl" lang="fa">
       <body className="antialiased">
-        <Providers>{children}</Providers>
+        <ThemeProvider
+          enableSystem
+          attribute="class"
+          defaultTheme="light"
+          disableTransitionOnChange
+        >
+          <Providers>{children}</Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,17 +1,9 @@
-'use client';
-
-import Footer from '@/components/Landing/Footer';
-import Header from '@/components/Landing/Header';
-import MainContent from '@/components/Landing/MainContent';
-import Navbar from '@/components/Landing/Navbar';
+import Navbar from '@/components/Landing/Navbar/navbar';
 
 export default function Home() {
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div>
       <Navbar />
-      <Header />
-      <MainContent />
-      <Footer />
     </div>
   );
 }

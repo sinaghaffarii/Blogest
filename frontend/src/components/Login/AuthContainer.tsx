@@ -101,7 +101,7 @@ export function AuthContainer() {
   };
 
   return (
-    <div className="flex justify-center items-center  px-4 py-8">
+    <div className="flex justify-center items-center px-4 py-8 w-[500px] mx-auto">
       <div className="w-full max-w-md">{renderForm()}</div>
     </div>
   );
