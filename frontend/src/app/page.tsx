@@ -1,5 +1,9 @@
-import BlogPage from '@/components/Blog/blog-page';
+import Navbar from '@/components/Landing/Navbar/navbar';
 
 export default function Home() {
-  return <BlogPage />;
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 }
