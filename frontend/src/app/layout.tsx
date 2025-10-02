@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 
+import Navbar from '@/components/Landing/Navbar/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 
-import Providers from './provider';
 import './globals.css';
+import Providers from './provider';
 
 export const metadata: Metadata = {
   title: 'Blogest',
@@ -24,7 +25,10 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
-          <Providers>{children}</Providers>
+          <Providers>
+            <Navbar />
+            {children}
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

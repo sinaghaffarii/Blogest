@@ -1,36 +1,41 @@
-import { Button } from '@/components/ui/button';
+import { HouseIcon, SunIcon } from 'lucide-react';
 
-import { Logo } from './logo';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+
 import { NavMenu } from './nav-menu';
-import { NavigationSheet } from './navigation-sheet';
 
 const Navbar = () => {
   return (
-    <div className="min-h-screen bg-muted">
-      <nav className="fixed top-6 inset-x-4 h-16 bg-background border dark:border-slate-700/70 max-w-(--breakpoint-xl) mx-auto rounded-full">
-        <div className="h-full flex items-center justify-between mx-auto px-4">
-          <Logo />
+    <nav
+      className="
+        fixed bottom-3 inset-x-0 h-12
+        border-t dark:border-slate-700/70
+        flex items-center justify-between p-2 bg-white z-50
+        md:top-6 md:inset-x-4 md:bottom-auto w-[500px] max-w-[80%] rounded-full border shadow-sm mx-auto
+      "
+    >
+      {/* Left Section */}
+      <div className="flex items-center gap-2">
+        <Button size="icon" className="rounded-full" variant="outline">
+          <SunIcon className="h-5 w-5" />
+          {/* <MoonIcon /> */}
+        </Button>
+      </div>
 
-          {/* Desktop Menu */}
-          <NavMenu className="hidden md:block" />
+      <Separator className="!h-[70%] sm:me-2" orientation="vertical" />
+      {/* Desktop Menu */}
 
-          <div className="flex items-center gap-3">
-            <Button
-              className="hidden sm:inline-flex rounded-full"
-              variant="outline"
-            >
-              ثبت نام
-            </Button>
-            <Button className="rounded-full">ورود</Button>
+      <NavMenu />
 
-            {/* Mobile Menu */}
-            <div className="md:hidden">
-              <NavigationSheet />
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
+      <Separator className="!h-[70%] sm:ms-2" orientation="vertical" />
+      {/* Right Section */}
+      <div className="flex items-center gap-2">
+        <Button size="icon" className="rounded-full" variant="outline">
+          <HouseIcon className="h-5 w-5" />
+        </Button>
+      </div>
+    </nav>
   );
 };
 

@@ -11,28 +11,30 @@ import {
 
 export const NavMenu = (props: ComponentProps<typeof NavigationMenu>) => (
   <NavigationMenu {...props}>
-    <NavigationMenuList className="gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start data-[orientation=vertical]:justify-start">
+    <NavigationMenuList className="gap-1 sm:gap-2 md:gap-4 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-center data-[orientation=vertical]:gap-6">
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="contactUs">تماس با من</Link>
+          <Link href="/">
+            <p>گالری</p>
+          </Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="aboutMe">درباره من</Link>
+          <Link href="/contactUs">تجربه‌های من</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="blogs">مقالات</Link>
+          <Link href="/aboutMe">درباره من</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
 
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="/">خانه</Link>
+          <Link href="/blogs">مقالات</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>
