@@ -26,15 +26,13 @@ async function fetchPosts(): Promise<{
 export default async function Home() {
   const { posts } = await fetchPosts();
 
-  console.log({ posts });
-
-  const featuredPosts = posts.slice(0, 3);
+  const featuredPosts = posts.slice(0, 4);
   const latestPosts = posts.slice(3, 9);
 
   const categories = Array.from(new Set(posts.flatMap((p) => p.categories)));
   return (
-    <div>
-      <Header />
+    <div className="max-w-6xl mx-auto container">
+      <Header posts={featuredPosts} />
       <FeaturedPosts posts={featuredPosts} />
       <Categories categories={categories} />
       <LatestPosts posts={latestPosts} />

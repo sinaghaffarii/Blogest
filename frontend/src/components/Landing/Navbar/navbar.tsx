@@ -1,41 +1,33 @@
-import { HouseIcon, SunIcon } from 'lucide-react';
-
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 
+import { Logo } from './logo';
 import { NavMenu } from './nav-menu';
+import { NavigationSheet } from './navigation-sheet';
 
 const Navbar = () => {
   return (
-    <nav
-      className="
-        fixed bottom-3 inset-x-0 h-12
-        border-t dark:border-slate-700/70
-        flex items-center justify-between p-2 bg-white z-50
-        md:top-6 md:inset-x-4 md:bottom-auto w-[500px] max-w-[80%] rounded-full border shadow-sm mx-auto
-      "
-    >
-      {/* Left Section */}
-      <div className="flex items-center gap-2">
-        <Button size="icon" className="rounded-full" variant="outline">
-          <SunIcon className="h-5 w-5" />
-          {/* <MoonIcon /> */}
-        </Button>
-      </div>
+    <div className="bg-muted">
+      <nav className="h-16 bg-background border-b">
+        <div className="h-full flex items-center justify-between max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Logo />
 
-      <Separator className="!h-[70%] sm:me-2" orientation="vertical" />
-      {/* Desktop Menu */}
+          {/* Desktop Menu */}
+          <NavMenu className="hidden md:block" />
 
-      <NavMenu />
+          <div className="flex items-center gap-3">
+            <Button className="hidden sm:inline-flex" variant="outline">
+              ثبت نام
+            </Button>
+            <Button>ورود</Button>
 
-      <Separator className="!h-[70%] sm:ms-2" orientation="vertical" />
-      {/* Right Section */}
-      <div className="flex items-center gap-2">
-        <Button size="icon" className="rounded-full" variant="outline">
-          <HouseIcon className="h-5 w-5" />
-        </Button>
-      </div>
-    </nav>
+            {/* Mobile Menu */}
+            <div className="md:hidden">
+              <NavigationSheet />
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 };
 

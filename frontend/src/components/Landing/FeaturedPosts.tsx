@@ -19,14 +19,14 @@ const itemVariants = {
 
 export default function FeaturedPosts({ posts }: { posts: Post[] }) {
   return (
-    <section className="px-6 md:px-20">
+    <section className="px-6 md:px-20 min-h-[600px] mt-20">
       <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
         مقالات برتر
       </h2>
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-4 gap-6">
         {posts.map((post) => (
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer p-2 border"
             initial="hidden"
             key={post._id}
             variants={itemVariants}
@@ -38,7 +38,7 @@ export default function FeaturedPosts({ posts }: { posts: Post[] }) {
                 height={220}
                 width={400}
                 alt={post.title}
-                className="w-full h-56 object-cover"
+                className="w-full h-56 object-cover rounded-xl shadow-xl"
                 src="/images/ide-coding.jpg"
               />
             )}
