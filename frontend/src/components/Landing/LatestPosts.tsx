@@ -1,6 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { Card } from '../ui/card';
 
 interface Post {
   _id: string;
@@ -16,29 +18,44 @@ const itemVariants = {
 
 export default function LatestPosts({ posts }: { posts: Post[] }) {
   return (
-    <section className="px-6 md:px-20">
+    <section className="min-h-[300px]">
       <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
         آخرین مقالات
       </h2>
       <div className="grid md:grid-cols-3 gap-6">
         {posts.map((post) => (
           <motion.div
-            key={post._id}
-            className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+            className="cursor-pointer"
             initial="hidden"
+            key={post._id}
+            variants={itemVariants}
             whileInView="visible"
             viewport={{ once: true }}
-            variants={itemVariants}
           >
             <Link href={`/articles/${post.slug}`}>
-              <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white hover:underline">
-                {post.title}
-              </h3>
-              {post.excerpt && (
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  {post.excerpt}
-                </p>
-              )}
+              <Card className="relative overflow-hidden rounded-xl group h-64 md:h-72 shadow-lg hover:shadow-2xl animate-accordion-up">
+                {/* Background Image */}
+                <Image
+                  fill
+                  alt={post.title}
+                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  src="/images/javascript.png"
+                  priority
+                />
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h3 className="font-semibold text-lg mb-1">{post.title}</h3>
+                  {post.excerpt && (
+                    <p className="text-sm text-gray-200 line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  )}
+                </div>
+              </Card>
             </Link>
           </motion.div>
         ))}
