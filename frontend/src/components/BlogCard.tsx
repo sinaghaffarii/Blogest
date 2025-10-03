@@ -12,7 +12,7 @@ interface Props {
 
 const BlogCard = ({ post }: Props) => {
   return (
-    <div className="relative rounded-3xl min-h-fit flex items-center justify-start flex-col md:flex-row p-4 border overflow-hidden bg-gradient-to-t from-gray-100 to-white">
+    <div className="relative rounded-3xl min-h-fit flex items-center justify-start flex-col md:flex-row p-4 border overflow-hidden">
       {post.coverImage && (
         <Image
           height={220}
@@ -24,27 +24,37 @@ const BlogCard = ({ post }: Props) => {
       )}
 
       <div className="h-32 md:h-full relative flex items-start justify-start flex-col mb-auto space-y-4 my-4 md:mr-4">
-        <p className="text-lg md:text-xl font-medium text-start tracking-wide">
+        {/* Added dark mode text color for title */}
+        <p className="text-lg md:text-xl font-medium text-start tracking-wide text-slate-900 dark:text-gray-100">
           {post.title}
         </p>
-        <p className="text-sm md:text-base font-light text-start text-gray-500">
+        {/* Added dark mode text color for excerpt */}
+        <p className="text-sm md:text-base font-light text-start text-slate-500 dark:text-slate-400">
           {post.excerpt}
         </p>
+
         <div className="absolute bottom-0 md:bottom-4 flex items-center justify-between w-full">
           <div className="flex items-center justify-start space-x-2">
-            <EarthIcon className="size-5 mb-1" />
-            <p className="text-xs md:text-sm font-medium">
+            {/* Icon will inherit the color from the parent text color */}
+            <EarthIcon className="size-5 mb-1 text-slate-700 dark:text-slate-300" />
+            {/* Added dark mode text color for date */}
+            <p className="text-xs md:text-sm font-medium text-slate-600 dark:text-slate-300">
               {toPersianDate(post.createdAt)}
             </p>
           </div>
           <div className="flex items-center justify-start space-x-2">
             <div className="flex items-center justify-start space-x-2 font-medium">
-              <HeartIcon className="size-4 mb-1" />
-              <p className="text-sm">{post.likesCount}</p>
+              <HeartIcon className="size-4 mb-1 text-slate-700 dark:text-slate-300" />
+              {/* Added dark mode text color for counts */}
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                {post.likesCount}
+              </p>
             </div>
             <div className="flex items-center justify-start space-x-2 font-medium">
-              <MessageSquareIcon className="size-4 mb-1" />
-              <p className="text-sm">{post.commentsCount}</p>
+              <MessageSquareIcon className="size-4 mb-1 text-slate-700 dark:text-slate-300" />
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                {post.commentsCount}
+              </p>
             </div>
           </div>
         </div>

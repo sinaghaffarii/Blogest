@@ -1,7 +1,6 @@
 import type { Post } from '@/utils/types';
 
 import CallToAction from '@/components/Landing/CallToAction';
-import Categories from '@/components/Landing/Categories';
 import CollectionPosts from '@/components/Landing/CollectionPosts';
 import Header from '@/components/Landing/Header';
 import LatestPosts from '@/components/Landing/LatestPosts';
@@ -30,12 +29,10 @@ export default async function Home() {
   const collectionPosts = posts.slice(0, 3);
   const latestPosts = posts.slice(3, 9);
 
-  const categories = Array.from(new Set(posts.flatMap((p) => p.categories)));
   return (
     <div className="w-6xl max-w-[90vw] mx-auto space-y-12 container">
       <Header posts={headersPosts} />
       <CollectionPosts posts={collectionPosts} />
-      <Categories categories={categories} />
       <LatestPosts posts={latestPosts} />
       <CallToAction />
     </div>
