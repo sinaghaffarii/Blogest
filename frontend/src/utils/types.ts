@@ -8,7 +8,7 @@ export interface Pagination {
   hasPrev?: boolean;
 }
 
-export interface Post {
+export interface Blog {
   content: any;
   _id: string;
   author: {

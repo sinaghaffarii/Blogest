@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 
-import { Logo } from './logo';
-import { NavMenu } from './nav-menu';
-import { NavigationSheet } from './navigation-sheet';
+import { Logo } from './Logo';
+import { NavigationSheet } from './NavigationSheet';
+import { NavMenu } from './NavMenu';
 
 const Navbar = () => {
   return (

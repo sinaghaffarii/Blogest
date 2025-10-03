@@ -3,17 +3,17 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import type { Post } from '@/utils/types';
+import type { Blog } from '@/utils/types';
 
-import { Card } from '../ui/card';
-import { Separator } from '../ui/separator';
+import { Card } from '../ui/Card';
+import { Separator } from '../ui/Separator';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-export default function LatestPosts({ posts }: { posts: Post[] }) {
+export default function LatestPosts({ posts }: { posts: Blog[] }) {
   return (
     <section className="min-h-[300px]">
       <h2 className="font-semibold text-base md:text-lg lg:texg-xl  text-gray-900 dark:text-gray-100 underline underline-offset-[26px]">

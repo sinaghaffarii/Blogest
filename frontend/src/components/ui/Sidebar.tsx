@@ -10,23 +10,23 @@ import * as React from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 
-import { Button } from './button';
-import { Input } from './input';
-import { Separator } from './separator';
+import { Button } from './Button';
+import { Input } from './Input';
+import { Separator } from './Separator';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from './sheet';
-import { Skeleton } from './skeleton';
+} from './Sheet';
+import { Skeleton } from './Skeleton';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from './tooltip';
+} from './Tooltip';
 
 const SIDEBAR_COOKIE_NAME = 'sidebar_state';
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -138,7 +138,7 @@ function SidebarProvider({
         <div
           data-slot="sidebar-wrapper"
           className={cn(
-            'group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
+            'group/Sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
             className,
           )}
           style={

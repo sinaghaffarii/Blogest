@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import Post, { IPost } from '../models/post.mode';
+import Blog, { IBlog } from '../models/blog.mode';
 import { StatusCodes } from 'http-status-codes';
 import { IUser } from '../models/user.model';
 
-class PostController {
+class BlogController {
   /**
-   * Create a new post
+   * Create a new blog
    */
   async create(req: Request, res: Response, next: NextFunction) {
     try {
@@ -28,14 +28,14 @@ class PostController {
         .replace(/-+/g, '-');
 
       // Check if slug already exists
-      const existingPost = await Post.findOne({ slug });
-      if (existingPost) {
+      const existingBlog = await Blog.findOne({ slug });
+      if (existingBlog) {
         return res
           .status(StatusCodes.BAD_REQUEST)
           .json({ error: 'Slug already exists' });
       }
 
-      const postData: Partial<IPost> = {
+      const blogData: Partial<IBlog> = {
         author: (req.user as IUser)?._id,
         title,
         slug,
@@ -48,18 +48,18 @@ class PostController {
         publishedAt: published ? new Date() : undefined,
       };
 
-      const post = new Post(postData);
-      await post.save();
+      const blog = new Blog(blogData);
+      await blog.save();
 
-      await post.populate('author', 'name email');
-      res.status(StatusCodes.OK).json(post);
+      await blog.populate('author', 'name email');
+      res.status(StatusCodes.OK).json(blog);
     } catch (error) {
       next(error);
     }
   }
 
   /**
-   * Update a post by ID
+   * Update a blog by ID
    */
   async update(req: Request, res: Response, next: NextFunction) {
     try {
@@ -69,7 +69,7 @@ class PostController {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res
           .status(StatusCodes.BAD_REQUEST)
-          .json({ error: 'Invalid post ID' });
+          .json({ error: 'Invalid blog ID' });
       }
 
       // Handle slug generation if title is being updated
@@ -81,11 +81,11 @@ class PostController {
           .replace(/-+/g, '-');
 
         // Check for duplicate slug
-        const existingPost = await Post.findOne({
+        const existingBlog = await Blog.findOne({
           slug: updates.slug,
           _id: { $ne: id },
         });
-        if (existingPost) {
+        if (existingBlog) {
           return res
             .status(StatusCodes.BAD_REQUEST)
             .json({ error: 'Slug already exists' });
@@ -99,26 +99,26 @@ class PostController {
         updates.publishedAt = undefined;
       }
 
-      const post = await Post.findByIdAndUpdate(
+      const blog = await Blog.findByIdAndUpdate(
         id,
         { ...updates },
         { new: true, runValidators: true },
       ).populate('author', 'name email');
 
-      if (!post) {
+      if (!blog) {
         return res
           .status(StatusCodes.NOT_FOUND)
-          .json({ error: 'Post not found' });
+          .json({ error: 'Blog not found' });
       }
 
-      res.json(post);
+      res.json(blog);
     } catch (error) {
       next(error);
     }
   }
 
   /**
-   * Get list of posts with filters and pagination
+   * Get list of blogs with filters and pagination
    */
   async getList(req: Request, res: Response, next: NextFunction) {
     try {
@@ -168,18 +168,18 @@ class PostController {
       sort[sortBy as string] = sortOrder === 'desc' ? -1 : 1;
 
       // Execute query
-      const posts = await Post.find(filter)
+      const blogs = await Blog.find(filter)
         .populate('author', 'name email')
         .sort(sort)
         .skip(skip)
         .limit(limitNum);
 
       // Get total count for pagination
-      const total = await Post.countDocuments(filter);
+      const total = await Blog.countDocuments(filter);
       const totalPages = Math.ceil(total / limitNum);
 
       res.json({
-        posts,
+        blogs,
         pagination: {
           current: pageNum,
           total: totalPages,
@@ -194,31 +194,31 @@ class PostController {
   }
 
   /**
-   * Get post by slug
+   * Get blog by slug
    */
   async getBySlug(req: Request, res: Response, next: NextFunction) {
     try {
       const { slug } = req.params;
 
-      const post = await Post.findOne({ slug }).populate(
+      const blog = await Blog.findOne({ slug }).populate(
         'author',
         'name email',
       );
 
-      if (!post) {
+      if (!blog) {
         return res
           .status(StatusCodes.NOT_FOUND)
-          .json({ error: 'Post not found' });
+          .json({ error: 'Blog not found' });
       }
 
-      res.json(post);
+      res.json(blog);
     } catch (error) {
       next(error);
     }
   }
 
   /**
-   * Get post by ID
+   * Get blog by ID
    */
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
@@ -227,25 +227,25 @@ class PostController {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res
           .status(StatusCodes.BAD_REQUEST)
-          .json({ status: false, error: 'Invalid post ID' });
+          .json({ status: false, error: 'Invalid blog ID' });
       }
 
-      const post = await Post.findById(id).populate('author', 'name email');
+      const blog = await Blog.findById(id).populate('author', 'name email');
 
-      if (!post) {
+      if (!blog) {
         return res
           .status(StatusCodes.NOT_FOUND)
-          .json({ status: false, error: 'Post not found' });
+          .json({ status: false, error: 'Blog not found' });
       }
 
-      res.json(post);
+      res.json(blog);
     } catch (error) {
       next(error);
     }
   }
 
   /**
-   * Delete a post by ID
+   * Delete a blog by ID
    */
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
@@ -254,18 +254,18 @@ class PostController {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res
           .status(StatusCodes.BAD_REQUEST)
-          .json({ error: 'Invalid post ID' });
+          .json({ error: 'Invalid blog ID' });
       }
 
-      const post = await Post.findByIdAndDelete(id);
+      const blog = await Blog.findByIdAndDelete(id);
 
-      if (!post) {
+      if (!blog) {
         return res
           .status(StatusCodes.NOT_FOUND)
-          .json({ error: 'Post not found' });
+          .json({ error: 'Blog not found' });
       }
 
-      res.json({ status: true, message: 'Post deleted successfully' });
+      res.json({ status: true, message: 'Blog deleted successfully' });
     } catch (error) {
       next(error);
       // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -284,22 +284,22 @@ class PostController {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res
           .status(StatusCodes.BAD_REQUEST)
-          .json({ error: 'Invalid post ID' });
+          .json({ error: 'Invalid blog ID' });
       }
 
-      const post = await Post.findByIdAndUpdate(
+      const blog = await Blog.findByIdAndUpdate(
         id,
         { $inc: { likesCount: 1 } },
         { new: true },
       );
 
-      if (!post) {
+      if (!blog) {
         return res
           .status(StatusCodes.NOT_FOUND)
-          .json({ error: 'Post not found' });
+          .json({ error: 'Blog not found' });
       }
 
-      res.json({ likesCount: post.likesCount });
+      res.json({ likesCount: blog.likesCount });
     } catch (error) {
       next(error);
     }
@@ -319,29 +319,29 @@ class PostController {
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res
           .status(StatusCodes.BAD_REQUEST)
-          .json({ error: 'Invalid post ID' });
+          .json({ error: 'Invalid blog ID' });
       }
 
-      const post = await Post.findByIdAndUpdate(
+      const blog = await Blog.findByIdAndUpdate(
         id,
         { $inc: { commentsCount: 1 } },
         { new: true },
       );
 
-      if (!post) {
+      if (!blog) {
         return res
           .status(StatusCodes.NOT_FOUND)
-          .json({ error: 'Post not found' });
+          .json({ error: 'Blog not found' });
       }
 
-      res.json({ commentsCount: post.commentsCount });
+      res.json({ commentsCount: blog.commentsCount });
     } catch (error) {
       next(error);
     }
   }
 
   /**
-   * Get posts by category
+   * Get blogs by category
    */
   async getByCategory(req: Request, res: Response, next: NextFunction) {
     try {
@@ -352,16 +352,16 @@ class PostController {
       const limitNum = parseInt(limit as string);
       const skip = (pageNum - 1) * limitNum;
 
-      const posts = await Post.find({ categories: category })
+      const blogs = await Blog.find({ categories: category })
         .populate('author', 'name email')
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limitNum);
 
-      const total = await Post.countDocuments({ categories: category });
+      const total = await Blog.countDocuments({ categories: category });
 
       res.json({
-        posts,
+        blogs,
         pagination: {
           current: pageNum,
           total: Math.ceil(total / limitNum),
@@ -374,4 +374,4 @@ class PostController {
   }
 }
 
-export default new PostController();
+export default new BlogController();

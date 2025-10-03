@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-export interface IPost extends Document {
+export interface IBlog extends Document {
   author: mongoose.Types.ObjectId;
   title: string;
   slug: string;
@@ -15,7 +15,7 @@ export interface IPost extends Document {
   publishedAt?: Date;
 }
 
-const postSchema = new Schema<IPost>(
+const blogSchema = new Schema<IBlog>(
   {
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     title: { type: String, required: true },
@@ -33,5 +33,5 @@ const postSchema = new Schema<IPost>(
   { timestamps: true },
 );
 
-const Post = mongoose.model<IPost>('Post', postSchema);
-export default Post;
+const Blog = mongoose.model<IBlog>('Blog', blogSchema);
+export default Blog;

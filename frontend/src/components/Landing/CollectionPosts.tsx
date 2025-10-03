@@ -3,18 +3,18 @@ import { motion } from 'framer-motion';
 import { EarthIcon, HeartIcon, MessageSquareIcon } from 'lucide-react';
 import Image from 'next/image';
 
-import type { Post } from '@/utils/types';
+import type { Blog } from '@/utils/types';
 
 import { toPersianDate } from '@/utils/toPersianDate';
 
-import { Separator } from '../ui/separator';
+import { Separator } from '../ui/Separator';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
-export default function CollectionPosts({ posts }: { posts: Post[] }) {
+export default function CollectionPosts({ posts }: { posts: Blog[] }) {
   return (
     <section className="min-h-[500px]">
       <h2 className="font-semibold text-base md:text-lg lg:texg-xl  text-gray-900 dark:text-gray-100 underline underline-offset-[26px]">

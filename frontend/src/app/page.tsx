@@ -1,12 +1,12 @@
-import type { Post } from '@/utils/types';
+import type { Blog } from '@/utils/types';
 
 import CallToAction from '@/components/Landing/CallToAction';
 import CollectionPosts from '@/components/Landing/CollectionPosts';
 import Header from '@/components/Landing/Header';
 import LatestPosts from '@/components/Landing/LatestPosts';
 
-async function fetchPosts(): Promise<{
-  posts: Post[];
+async function fetchBlogs(): Promise<{
+  blogs: Blog[];
   pagination: {
     current: number;
     hasNext: boolean;
@@ -15,7 +15,7 @@ async function fetchPosts(): Promise<{
     total: number;
   };
 }> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/getList`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getList`);
   if (!res.ok) {
     throw new Error('دریافت مقالات با خطا مواجه شد');
   }
@@ -23,11 +23,11 @@ async function fetchPosts(): Promise<{
 }
 
 export default async function Home() {
-  const { posts } = await fetchPosts();
+  const { blogs } = await fetchBlogs();
 
-  const headersPosts = posts.slice(0, 4);
-  const collectionPosts = posts.slice(0, 3);
-  const latestPosts = posts.slice(3, 9);
+  const headersPosts = blogs.slice(0, 4);
+  const collectionPosts = blogs.slice(0, 3);
+  const latestPosts = blogs.slice(3, 9);
 
   return (
     <div className="w-6xl max-w-[90vw] mx-auto space-y-12 container">

@@ -1,11 +1,11 @@
 'use client';
 
-import type { Post } from '@/utils/types';
+import type { Blog } from '@/utils/types';
 
 import BlogCard from '../BlogCard';
-import { Separator } from '../ui/separator';
+import { Separator } from '../ui/Separator';
 
-export default function Header({ posts }: { posts: Post[] }) {
+export default function Header({ posts }: { posts: Blog[] }) {
   return (
     <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden text-center transition-colors mt-6">
       <div className="flex items-center justify-start w-full flex-col mb-auto">
