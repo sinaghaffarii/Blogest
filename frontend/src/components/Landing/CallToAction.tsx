@@ -1,0 +1,31 @@
+'use client';
+import Lottie from 'lottie-react';
+
+import javaScriptCpu from '../../../public/images/JavaScript-cpu.json';
+import { Button } from '../ui/button';
+
+export default function CallToAction() {
+  return (
+    <section className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20 text-gray-800 dark:text-white text-center rounded-2xl my-20 relative overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center h-[400px]">
+      <div className="opacity-90 col-span-2 md:col-span-1 mx-auto order-2">
+        <Lottie
+          style={{ height: '100%', width: '100%' }}
+          animationData={javaScriptCpu}
+          loop
+        />
+      </div>
+
+      <div className="relative z-10 max-w-2xl p-8 col-span-2 md:col-span-1 mx-auto order-1">
+        <h2 className="text-xl md:text-2xl font-bold mb-4">
+          می‌خوای آخرین مقالات رو دریافت کنی؟
+        </h2>
+        <p className="mb-8 text-lg md:text-xl">
+          در خبرنامه ما عضو شو و از آخرین مقالات و آموزش‌ها باخبر باش
+        </p>
+        <Button className="px-8 py-4 bg-white text-gray-600 font-semibold hover:bg-gray-100 dark:text-gray-500 dark:bg-gray-100 dark:hover:bg-gray-200 transition shadow-md">
+          ثبت نام در خبرنامه
+        </Button>
+      </div>
+    </section>
+  );
+}

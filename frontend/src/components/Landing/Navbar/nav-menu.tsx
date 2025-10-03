@@ -11,28 +11,30 @@ import {
 
 export const NavMenu = (props: ComponentProps<typeof NavigationMenu>) => (
   <NavigationMenu {...props}>
-    <NavigationMenuList className="gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start data-[orientation=vertical]:justify-start">
+    <NavigationMenuList className="gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-center data-[orientation=vertical]:justify-center">
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="contactUs">تماس با من</Link>
+          <Link href="#">درباره من</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
-
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="aboutMe">درباره من</Link>
+          <Link href="#">مقالات عمومی</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
-
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="blogs">مقالات</Link>
+          <Link href="#">جاوا اسکریپت</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
-
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="/">خانه</Link>
+          <Link href="#">جدیدترین ها</Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <Link href="#">خانه</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
     </NavigationMenuList>

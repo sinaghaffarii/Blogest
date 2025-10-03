@@ -1,95 +1,28 @@
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import Image from 'next/image';
+'use client';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import type { Post } from '@/utils/types';
 
-interface HeroPageProps {
-  badge?: string;
-  heading: string;
-  description: string;
-  buttons?: {
-    primary?: {
-      text: string;
-      url: string;
-    };
-    secondary?: {
-      text: string;
-      url: string;
-    };
-  };
-  image: {
-    src: string;
-    alt: string;
-  };
-}
+import BlogCard from '../BlogCard';
+import { Separator } from '../ui/separator';
 
-const defaultButtons = {
-  primary: {
-    text: 'Discover all components',
-    url: 'https://www.shadcnblocks.com',
-  },
-  secondary: {
-    text: 'View on GitHub',
-    url: 'https://www.shadcnblocks.com',
-  },
-};
-
-const defaultImage = {
-  src: 'https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg',
-  alt: 'Hero section demo image showing interface components',
-};
-
-const HeroPage = ({
-  badge = '✨ Your Website Builder',
-  heading = 'Blocks Built With Shadcn & Tailwind',
-  description = 'Finely crafted components built with React, Tailwind and Shadcn UI. Developers can copy and paste these blocks directly into their project.',
-  buttons = defaultButtons,
-  image = defaultImage,
-}: HeroPageProps) => {
+export default function Header({ posts }: { posts: Post[] }) {
   return (
-    <section className="py-32">
-      <div className="container">
-        <div className="grid items-center gap-8 lg:grid-cols-2">
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            {badge && (
-              <Badge variant="outline">
-                {badge}
-                <ArrowUpRight className="ml-2 size-4" />
-              </Badge>
-            )}
-            <h1 className="my-6 text-pretty text-4xl font-bold lg:text-6xl">
-              {heading}
-            </h1>
-            <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
-              {description}
+    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden text-center bg-white dark:bg-gray-900 transition-colors mt-6">
+      <div className="flex items-center justify-start w-full flex-col mb-auto">
+        <p className="font-semibold text-base md:text-lg lg:texg-xl me-auto underline underline-offset-[26px] text-gray-900 dark:text-white z-10">
+          پربازدیدهای 24 ساعت گذشته
+        </p>
+        <Separator className="my-4" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5 w-full space-y-4 md:space-y-0">
+          {posts && posts.length > 0 ? (
+            posts.map((post) => <BlogCard key={post._id} post={post} />)
+          ) : (
+            <p className="text-gray-500 w-full text-center">
+              هیچ پستی یافت نشد.
             </p>
-            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
-              {buttons.primary && (
-                <Button asChild className="w-full sm:w-auto">
-                  <a href={buttons.primary.url}>{buttons.primary.text}</a>
-                </Button>
-              )}
-              {buttons.secondary && (
-                <Button asChild className="w-full sm:w-auto" variant="outline">
-                  <a href={buttons.secondary.url}>
-                    {buttons.secondary.text}
-                    <ArrowRight className="size-4" />
-                  </a>
-                </Button>
-              )}
-            </div>
-          </div>
-          <Image
-            fill
-            alt={image.alt}
-            className="max-h-96 w-full rounded-xl object-cover"
-            src={image.src}
-          />
+          )}
         </div>
       </div>
     </section>
   );
-};
-
-export { HeroPage };
+}
