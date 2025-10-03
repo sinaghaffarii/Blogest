@@ -2,12 +2,12 @@ import { EarthIcon, HeartIcon, MessageSquareIcon } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
-import type { Post } from '@/utils/types';
+import type { Blog } from '@/utils/types';
 
 import { toPersianDate } from '@/utils/toPersianDate';
 
 interface Props {
-  post: Post;
+  post: Blog;
 }
 
 const BlogCard = ({ post }: Props) => {

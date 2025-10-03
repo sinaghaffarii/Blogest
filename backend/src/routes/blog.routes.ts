@@ -1,51 +1,51 @@
 import express from 'express';
-import postController from '../controllers/post.controller';
+import blogController from '../controllers/blog.controller';
 import { authenticateToken, authorizeRoles } from '../middlewares/auth';
 
 const router = express.Router();
 
 //Public routes
-router.get('/getList', postController.getList.bind(postController));
+router.get('/getList', blogController.getList.bind(blogController));
 router.get(
   '/getBySlug/slug/:slug',
-  postController.getBySlug.bind(postController),
+  blogController.getBySlug.bind(blogController),
 );
 router.get(
   '/getByCategory/:category',
-  postController.getByCategory.bind(postController),
+  blogController.getByCategory.bind(blogController),
 );
-router.get('/getById/:id', postController.getById.bind(postController));
+router.get('/getById/:id', blogController.getById.bind(blogController));
 
 // Protected routes (require authentication)
 router.post(
   '/create',
   authenticateToken,
   authorizeRoles('admin', 'author'),
-  postController.create.bind(postController),
+  blogController.create.bind(blogController),
 );
 router.put(
   '/update/:id',
   authenticateToken,
   authorizeRoles('admin', 'author'),
-  postController.update.bind(postController),
+  blogController.update.bind(blogController),
 );
 router.delete(
   '/delete/:id',
   authenticateToken,
   authorizeRoles('admin', 'author'),
-  postController.delete.bind(postController),
+  blogController.delete.bind(blogController),
 );
 router.patch(
   '/like/:id/like',
   authenticateToken,
   authorizeRoles('admin', 'author'),
-  postController.like.bind(postController),
+  blogController.like.bind(blogController),
 );
 router.patch(
   '/incrementCommentsCount/:id/comment',
   authenticateToken,
   authorizeRoles('admin', 'author'),
-  postController.incrementCommentsCount.bind(postController),
+  blogController.incrementCommentsCount.bind(blogController),
 );
 
 export default router;
