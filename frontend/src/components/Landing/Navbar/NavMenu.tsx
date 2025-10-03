@@ -7,9 +7,9 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from '@/components/ui/navigation-menu';
+} from '@/components/ui/NavigationMenu';
 
-import { menuItems } from './menuItems';
+import { menuItems } from './MenuItems';
 
 export const NavMenu = (props: ComponentProps<typeof NavigationMenu>) => (
   <NavigationMenu {...props}>

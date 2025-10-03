@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 import type { Blog } from '@/utils/types';
 
-import { Card } from '../ui/card';
-import { Separator } from '../ui/separator';
+import { Card } from '../ui/Card';
+import { Separator } from '../ui/Separator';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },

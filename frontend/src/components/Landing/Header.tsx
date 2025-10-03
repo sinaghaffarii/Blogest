@@ -3,7 +3,7 @@
 import type { Blog } from '@/utils/types';
 
 import BlogCard from '../BlogCard';
-import { Separator } from '../ui/separator';
+import { Separator } from '../ui/Separator';
 
 export default function Header({ posts }: { posts: Blog[] }) {
   return (

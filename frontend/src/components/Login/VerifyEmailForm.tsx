@@ -2,9 +2,9 @@
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Label } from '@/components/ui/Label';
 import { useVerifyEmail } from '@/services/auth';
 
 import { AuthCard } from './AuthCard';

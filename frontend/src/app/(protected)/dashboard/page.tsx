@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 
-import { AppSidebar } from '@/components/Dashboard/app-sidebar';
+import { AppSidebar } from '@/components/Dashboard/AppSidebar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,13 +9,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { Separator } from '@/components/ui/separator';
+} from '@/components/ui/Breadcrumb';
+import { Separator } from '@/components/ui/Separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/Sidebar';
 
 export default function Page() {
   const pathname = usePathname();

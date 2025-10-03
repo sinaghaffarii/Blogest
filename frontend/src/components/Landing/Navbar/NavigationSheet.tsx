@@ -1,9 +1,9 @@
 import { Menu } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/Button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/Sheet';
 
-import { NavMenu } from './nav-menu';
+import { NavMenu } from './NavMenu';
 
 export const NavigationSheet = () => {
   return (

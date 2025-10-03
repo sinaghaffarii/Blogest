@@ -7,7 +7,7 @@ import type { Blog } from '@/utils/types';
 
 import { toPersianDate } from '@/utils/toPersianDate';
 
-import { Separator } from '../ui/separator';
+import { Separator } from '../ui/Separator';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },

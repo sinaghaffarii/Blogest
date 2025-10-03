@@ -2,7 +2,7 @@
 import Lottie from 'lottie-react';
 
 import javaScriptCpu from '../../../public/images/JavaScript-cpu.json';
-import { Button } from '../ui/button';
+import { Button } from '../ui/Button';
 
 export default function CallToAction() {
   return (
