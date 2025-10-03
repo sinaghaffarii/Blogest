@@ -1,15 +1,12 @@
 'use client';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { Card } from '../ui/card';
+import Link from 'next/link';
 
-interface Post {
-  _id: string;
-  title: string;
-  slug: string;
-  excerpt?: string;
-}
+import type { Post } from '@/utils/types';
+
+import { Card } from '../ui/card';
+import { Separator } from '../ui/separator';
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -19,9 +16,10 @@ const itemVariants = {
 export default function LatestPosts({ posts }: { posts: Post[] }) {
   return (
     <section className="min-h-[300px]">
-      <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900 dark:text-white">
+      <h2 className="font-semibold text-base md:text-lg lg:texg-xl  text-gray-900 dark:text-gray-100 underline underline-offset-[26px]">
         آخرین مقالات
       </h2>
+      <Separator className="my-4" />
       <div className="grid md:grid-cols-3 gap-6">
         {posts.map((post) => (
           <motion.div
@@ -39,7 +37,7 @@ export default function LatestPosts({ posts }: { posts: Post[] }) {
                   fill
                   alt={post.title}
                   className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                  src="/images/javascript.png"
+                  src="/images/computer-cpu.png"
                   priority
                 />
 

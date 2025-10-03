@@ -18,7 +18,7 @@ const Navbar = () => {
             <Button className="hidden sm:inline-flex" variant="outline">
               ثبت نام
             </Button>
-            <Button>ورود</Button>
+            <Button variant="secondary">ورود</Button>
 
             {/* Mobile Menu */}
             <div className="md:hidden">

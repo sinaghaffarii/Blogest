@@ -17,14 +17,14 @@ const itemVariants = {
 export default function CollectionPosts({ posts }: { posts: Post[] }) {
   return (
     <section className="min-h-[500px]">
-      <h2 className="text-xl md:text-2xl font-bold  text-gray-900 dark:text-white underline underline-offset-[26px]">
+      <h2 className="font-semibold text-base md:text-lg lg:texg-xl  text-gray-900 dark:text-gray-100 underline underline-offset-[26px]">
         مجموعه ها
       </h2>
       <Separator className="my-4" />
       <div className="grid md:grid-cols-3 gap-6">
         {posts.map((post) => (
           <motion.div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer p-2 border relative "
+            className="rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer p-2 border relative "
             initial="hidden"
             key={post._id}
             variants={itemVariants}
@@ -41,7 +41,7 @@ export default function CollectionPosts({ posts }: { posts: Post[] }) {
               />
             )}
             <div className="h-36 relative flex items-start justify-start flex-col mb-auto space-y-4 my-4 ms-2">
-              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+              <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">
                 {post.title}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">

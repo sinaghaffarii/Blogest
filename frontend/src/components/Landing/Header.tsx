@@ -7,9 +7,9 @@ import { Separator } from '../ui/separator';
 
 export default function Header({ posts }: { posts: Post[] }) {
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden text-center bg-white dark:bg-gray-900 transition-colors mt-6">
+    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden text-center transition-colors mt-6">
       <div className="flex items-center justify-start w-full flex-col mb-auto">
-        <p className="font-semibold text-base md:text-lg lg:texg-xl me-auto underline underline-offset-[26px] text-gray-900 dark:text-white z-10">
+        <p className="font-semibold text-base md:text-lg lg:texg-xl me-auto underline underline-offset-[26px] z-10">
           پربازدیدهای 24 ساعت گذشته
         </p>
         <Separator className="my-4" />
@@ -17,9 +17,7 @@ export default function Header({ posts }: { posts: Post[] }) {
           {posts && posts.length > 0 ? (
             posts.map((post) => <BlogCard key={post._id} post={post} />)
           ) : (
-            <p className="text-gray-500 w-full text-center">
-              هیچ پستی یافت نشد.
-            </p>
+            <p className="w-full text-center">هیچ پستی یافت نشد.</p>
           )}
         </div>
       </div>

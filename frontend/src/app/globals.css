@@ -4,6 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Base Palette (Existing) */
   --base-50: oklch(0.985 0.0013 286.84);
   --base-100: oklch(0.967 0.0027 286.38);
   --base-200: oklch(0.92 0.0053 286.32);
@@ -17,9 +18,23 @@
   --base-950: oklch(0.141 0.004 285.83);
   --base-1000: oklch(0.096 0.0027 285.79);
 
+  /* Bright Green Palette (NEW) */
+  --bright-green-50: #efffe5;
+  --bright-green-100: #daffc8;
+  --bright-green-200: #b6ff97;
+  --bright-green-300: #7cfb4a;
+  --bright-green-400: #5ff229;
+  --bright-green-500: #3fd80a;
+  --bright-green-600: #2bad03;
+  --bright-green-700: #238308;
+  --bright-green-800: #20670d;
+  --bright-green-900: #1d5710;
+  --bright-green-950: #093102;
+
+  /* Light Mode */
   --background: var(--color-white);
   --foreground: var(--base-800);
-  --card: var(--color-white);
+  --card: var(--bright-green-50); /* changed */
   --card-foreground: var(--base-800);
   --popover: var(--color-white);
   --popover-foreground: var(--base-800);
@@ -35,11 +50,14 @@
   --border: var(--base-200);
   --input: var(--base-300);
   --ring: var(--base-800);
-  --chart-1: var(--base-950);
-  --chart-2: var(--base-600);
-  --chart-3: var(--base-800);
-  --chart-4: var(--base-400);
+
+  /* Chart colors updated to include bright-green */
+  --chart-1: var(--bright-green-600);
+  --chart-2: var(--base-950);
+  --chart-3: var(--base-600);
+  --chart-4: var(--bright-green-400);
   --chart-5: var(--base-300);
+
   --radius: 0.5rem;
   --sidebar: var(--base-100);
   --sidebar-foreground: var(--base-800);
@@ -54,8 +72,8 @@
 .dark {
   --background: var(--base-950);
   --foreground: var(--base-200);
-  --card: var(--base-950);
-  --card-foreground: var(--base-200);
+  --card: var(--bright-green-950); /* darker green card */
+  --card-foreground: var(--bright-green-100);
   --popover: var(--base-950);
   --popover-foreground: var(--base-200);
   --primary: var(--base-50);
@@ -70,11 +88,14 @@
   --border: var(--base-800);
   --input: var(--base-700);
   --ring: var(--base-200);
-  --chart-1: var(--base-50);
-  --chart-2: var(--base-400);
+
+  /* Dark mode charts use bright green prominently */
+  --chart-1: var(--bright-green-400);
+  --chart-2: var(--bright-green-600);
   --chart-3: var(--base-200);
-  --chart-4: var(--base-600);
+  --chart-4: var(--bright-green-300);
   --chart-5: var(--base-700);
+
   --sidebar: var(--base-900);
   --sidebar-foreground: var(--base-200);
   --sidebar-primary: var(--base-50);
@@ -86,6 +107,7 @@
 }
 
 @theme inline {
+  /* Base & bright-green colors */
   --color-base-50: var(--base-50);
   --color-base-100: var(--base-100);
   --color-base-200: var(--base-200);
@@ -99,37 +121,56 @@
   --color-base-950: var(--base-950);
   --color-base-1000: var(--base-1000);
 
+  --color-bright-green-50: var(--bright-green-50);
+  --color-bright-green-100: var(--bright-green-100);
+  --color-bright-green-200: var(--bright-green-200);
+  --color-bright-green-300: var(--bright-green-300);
+  --color-bright-green-400: var(--bright-green-400);
+  --color-bright-green-500: var(--bright-green-500);
+  --color-bright-green-600: var(--bright-green-600);
+  --color-bright-green-700: var(--bright-green-700);
+  --color-bright-green-800: var(--bright-green-800);
+  --color-bright-green-900: var(--bright-green-900);
+  --color-bright-green-950: var(--bright-green-950);
+
+  /* System Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Chart */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Misc */
   --color-success: oklch(0.7 0.2 140);
   --color-success-foreground: var(--base-50);
   --radius-sm: 0.25rem;
@@ -137,6 +178,7 @@
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
 }
+
 
 /* Generated by script */
 @font-face {
@@ -225,3 +267,4 @@
     font-optical-sizing: auto;
   }
 }
+
