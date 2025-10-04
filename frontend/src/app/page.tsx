@@ -30,7 +30,7 @@ export default async function Home() {
   const latestPosts = blogs.slice(3, 9);
 
   return (
-    <div className="w-6xl max-w-[90vw] mx-auto space-y-12 container">
+    <div className="w-6xl max-w-[90vw] mx-auto space-y-12">
       <Header posts={headersPosts} />
       <CollectionPosts posts={collectionPosts} />
       <LatestPosts posts={latestPosts} />

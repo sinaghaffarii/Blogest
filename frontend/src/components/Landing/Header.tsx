@@ -7,7 +7,7 @@ import { Separator } from '../ui/Separator';
 
 export default function Header({ posts }: { posts: Blog[] }) {
   return (
-    <section className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden text-center transition-colors mt-6">
+    <section className="relative flex h-fit w-full flex-col items-center justify-center overflow-hidden text-center transition-colors mt-6">
       <div className="flex items-center justify-start w-full flex-col mb-auto">
         <p className="font-semibold text-base md:text-lg lg:texg-xl me-auto underline underline-offset-[26px] z-10">
           پربازدیدهای 24 ساعت گذشته

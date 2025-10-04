@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="rtl" lang="fa">
-      <body className="antialiased">
+      <body className="antialiased relative min-h-screen w-screen">
         <ThemeProvider
           enableSystem
           attribute="class"
