@@ -14,7 +14,7 @@ interface AuthCardProps {
 
 export function AuthCard({ title, description, children }: AuthCardProps) {
   return (
-    <Card>
+    <Card className="bg-muted">
       <CardHeader className="text-center">
         <CardTitle className="text-xl">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

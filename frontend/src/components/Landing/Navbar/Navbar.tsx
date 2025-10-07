@@ -1,10 +1,15 @@
+'use client';
+import { useRouter } from 'next/navigation';
+
 import { Button } from '@/components/ui/Button';
+import { RouteObject } from '@/utils/routeObject';
 
 import { Logo } from './Logo';
 import { NavigationSheet } from './NavigationSheet';
 import { NavMenu } from './NavMenu';
 
 const Navbar = () => {
+  const router = useRouter();
   return (
     <div className="bg-muted">
       <nav className="h-16 bg-background border-b">
@@ -15,11 +20,20 @@ const Navbar = () => {
           <NavMenu className="hidden md:block" />
 
           <div className="flex items-center gap-3">
-            <Button className="hidden sm:inline-flex" variant="outline">
+            <Button
+              className="hidden sm:inline-flex"
+              variant="outline"
+              onClick={() => router.push(RouteObject.LOGIN)}
+            >
               ثبت نام
             </Button>
-            <Button variant="secondary">ورود</Button>
 
+            <Button
+              variant="secondary"
+              onClick={() => router.push(RouteObject.LOGIN)}
+            >
+              ورود
+            </Button>
             {/* Mobile Menu */}
             <div className="md:hidden">
               <NavigationSheet />
