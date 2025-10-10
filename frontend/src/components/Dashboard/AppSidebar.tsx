@@ -5,6 +5,7 @@ import {
   Bot,
   Command,
   Frame,
+  Github,
   LifeBuoy,
   Link,
   Settings2,
@@ -78,15 +79,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg">
-              <Link href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-xl-lg">
-                  <Command className="size-4" />
-                </div>
-                <div className="grid flex-1 text-right text-sm leading-right">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
-                </div>
-              </Link>
+              <div>
+                <Github className="!size-6" />
+                <p className="text-lg font-semibold p-2 text-start rounded-sm">
+                  پنل مدیریتی
+                </p>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -1,15 +1,28 @@
-export const skills = [
-  { name: 'React.js', level: 90 },
-  { name: 'Next.js', level: 85 },
-  { name: 'TypeScript', level: 80 },
-  { name: 'Tailwind CSS', level: 90 },
-  { name: 'Node.js / Express', level: 75 },
+export interface Skill {
+  name: string;
+}
+export const skills: Skill[] = [
+  { name: 'React.js' },
+  { name: 'JavaScript' },
+  { name: 'Next.js' },
+  { name: 'TypeScript' },
+  { name: 'Tailwind CSS' },
+  { name: 'Node.js' },
+  { name: 'Express' },
+  { name: 'MongoDB' },
+  { name: 'GraphQL' },
+  { name: 'Docker' },
+  { name: 'GitLab' },
+  { name: 'Linux' },
+  { name: 'Jira' },
+  { name: 'CI/CD' },
 ];
 
 export const experiences = [
   {
-    company: 'TechCorp',
-    role: 'Senior Frontend Developer',
+    id: 'exp1',
+    company: 'Kahkeshan Dana',
+    role: 'Frontend Developer',
     period: '۱۴۰۲ - اکنون',
     bullets: [
       'طراحی و توسعه رابط‌های کاربری پیچیده با Next.js و React',
@@ -18,7 +31,8 @@ export const experiences = [
     ],
   },
   {
-    company: 'Startup Co.',
+    id: 'exp2',
+    company: 'Kahkeshan Noor',
     role: 'Frontend Developer',
     period: '۱۳۹۹ - ۱۴۰۲',
     bullets: [
@@ -29,10 +43,13 @@ export const experiences = [
 ];
 
 export const projects = [
-  { title: 'فروشگاه اینترنتی', tag: 'E-commerce' },
-  { title: 'پورتفولیو شخصی', tag: 'Portfolio' },
+  { id: 'p1', title: 'فروشگاه اینترنتی', tag: 'E-commerce' },
+  { id: 'p2', title: 'پورتفولیو شخصی', tag: 'Portfolio' },
+  { id: 'p3', title: 'DDSS', tag: 'Enterprise' },
+  { id: 'p4', title: 'Sanjify', tag: 'Test' },
+  { id: 'p5', title: 'DanaWiz', tag: 'Application' },
 ];
 
 export const toolsDesign = ['Figma', 'Photoshop', 'Illustrator'];
 export const toolsCollab = ['Notion', 'Linear', 'Slack'];
-export const languages = ['فارسی (مادری)', 'انگلیسی (روان)', 'عربی (متوسط)'];
+export const languages = ['فارسی (زبان مادری)', 'انگلیسی — سطح حرفه‌ای'];

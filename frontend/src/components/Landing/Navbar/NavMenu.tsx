@@ -19,7 +19,6 @@ export const NavMenu = (props: ComponentProps<typeof NavigationMenu>) => {
     <NavigationMenu {...props}>
       <NavigationMenuList className="gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-center data-[orientation=vertical]:justify-center flex-row-reverse">
         {menuItems.map((item, idx) => (
-          // eslint-disable-next-line @eslint-react/no-array-index-key
           <NavigationMenuItem
             key={idx}
             className={

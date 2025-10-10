@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@/components/ThemProvider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 export default function DashboardLayout({
   children,

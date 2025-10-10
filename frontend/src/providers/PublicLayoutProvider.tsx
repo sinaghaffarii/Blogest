@@ -17,8 +17,12 @@ export default function PublicLayoutProvider({
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
-      <footer className="mt-auto border-t py-6 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} MySite. All rights reserved.
+      <footer
+        dir="ltr"
+        className="mt-auto border-t py-6 text-center text-sm text-muted-foreground"
+      >
+        © {new Date().getFullYear()} Sina Ghaffari — Blogest. All rights
+        reserved.
       </footer>
     </div>
   );

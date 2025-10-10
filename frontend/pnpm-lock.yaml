@@ -85,6 +85,9 @@ importers:
       react-cookie:
         specifier: ^8.0.1
         version: 8.0.1(@types/react@19.1.13)(react@19.1.0)
+      react-devicons:
+        specifier: ^2.16.2
+        version: 2.16.2
       react-dom:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
@@ -4014,6 +4017,12 @@ packages:
     peerDependencies:
       react: '>= 16.3.0'
 
+  react-devicons@2.16.2:
+    resolution:
+      {
+        integrity: sha512-oVNx7pRIW5UfvSZGlvUICvBL54DfL/rGJWyf/5qJFCG9Cd4zzul0yYE0cKJASvQDPzjARhOq07No9SoQlURrFA==,
+      }
+
   react-dom@19.1.0:
     resolution:
       {
@@ -4075,6 +4084,13 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react@18.3.1:
+    resolution:
+      {
+        integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==,
+      }
+    engines: { node: '>=0.10.0' }
 
   react@19.1.0:
     resolution:
@@ -7442,6 +7458,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
+  react-devicons@2.16.2:
+    dependencies:
+      react: 18.3.1
+
   react-dom@19.1.0(react@19.1.0):
     dependencies:
       react: 19.1.0
@@ -7479,6 +7499,10 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.1.13
+
+  react@18.3.1:
+    dependencies:
+      loose-envify: 1.4.0
 
   react@19.1.0: {}
 

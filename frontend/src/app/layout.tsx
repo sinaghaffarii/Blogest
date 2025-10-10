@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import './globals.css';
-import { ThemeProvider } from '@/components/ThemProvider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 import Providers from './provider';
 
@@ -21,7 +21,7 @@ export default function RootLayout({
         <ThemeProvider
           enableSystem
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           disableTransitionOnChange
         >
           <Providers>{children}</Providers>
