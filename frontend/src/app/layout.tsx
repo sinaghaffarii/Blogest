@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 
-import Navbar from '@/components/Landing/Navbar/Navbar';
-import { ThemeProvider } from '@/components/ThemProvider';
-
 import './globals.css';
+import { ThemeProvider } from '@/components/ThemeProvider';
+
 import Providers from './provider';
 
 export const metadata: Metadata = {
@@ -18,17 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html dir="rtl" lang="fa">
-      <body className="antialiased">
+      <body className="antialiased relative min-h-screen w-screen">
         <ThemeProvider
           enableSystem
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           disableTransitionOnChange
         >
-          <Providers>
-            <Navbar />
-            {children}
-          </Providers>
+          <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
     </html>

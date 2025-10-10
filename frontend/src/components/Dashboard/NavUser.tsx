@@ -25,6 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/Sidebar';
+import { useLogout } from '@/services/auth';
 
 export function NavUser({
   user,
@@ -36,6 +37,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const { mutate: logout, isPending: logoutLoading } = useLogout();
 
   return (
     <SidebarMenu>
@@ -63,7 +65,7 @@ export function NavUser({
             side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
+            <DropdownMenuLabel className="p-0 font-normal ">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-xl-lg">
                   <AvatarImage alt={user.name} src={user.avatar} />
@@ -76,31 +78,25 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+            <DropdownMenuGroup dir="rtl">
               <DropdownMenuItem>
                 <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
+                حساب کاربری
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
-                Notifications
+                پیام ها
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              dir="rtl"
+              disabled={logoutLoading}
+              onClick={() => logout()}
+            >
               <LogOut />
-              Log out
+              خروج از حساب کاربری
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

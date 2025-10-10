@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 import api from '@/lib/axios';
+import { RouteObject } from '@/utils/routeObject';
 
 interface User {
   id: string;
@@ -45,10 +47,17 @@ export const useResetPassword = () =>
   });
 
 // ---- Logout ----
-export const useLogout = () =>
-  useMutation({
+export const useLogout = () => {
+  const router = useRouter();
+  return useMutation({
     mutationFn: () => api.post('/auth/logout').then((res) => res.data),
+    onSuccess: ({ status }) => {
+      if (status) {
+        router.replace(RouteObject.HOME);
+      }
+    },
   });
+};
 
 // ---- Check Auth ----
 export const useCheckAuth = () =>

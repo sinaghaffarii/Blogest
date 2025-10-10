@@ -4,136 +4,140 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Base Palette (Existing) */
-  --base-50: oklch(0.985 0.0013 286.84);
-  --base-100: oklch(0.967 0.0027 286.38);
-  --base-200: oklch(0.92 0.0053 286.32);
-  --base-300: oklch(0.871 0.008 286.29);
-  --base-400: oklch(0.705 0.012 286.07);
-  --base-500: oklch(0.552 0.016 285.94);
-  --base-600: oklch(0.442 0.0147 285.79);
-  --base-700: oklch(0.37 0.012 285.81);
-  --base-800: oklch(0.274 0.008 286.03);
-  --base-900: oklch(0.21 0.0053 285.89);
-  --base-950: oklch(0.141 0.004 285.83);
-  --base-1000: oklch(0.096 0.0027 285.79);
+  /* Neutral Gray Palette (GitHub/Vercel style) */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-850: #181c23;
+  --gray-900: #111827;
+  --gray-950: #0d1117; /* GitHub Dark BG */
+  --gray-1000: #010409; /* Pure Vercel/GitHub Deep Black */
 
-  /* Bright Green Palette (NEW) */
-  --bright-green-50: #efffe5;
-  --bright-green-100: #daffc8;
-  --bright-green-200: #b6ff97;
-  --bright-green-300: #7cfb4a;
-  --bright-green-400: #5ff229;
-  --bright-green-500: #3fd80a;
-  --bright-green-600: #2bad03;
-  --bright-green-700: #238308;
-  --bright-green-800: #20670d;
-  --bright-green-900: #1d5710;
-  --bright-green-950: #093102;
+  /* Accent (GitHub blue / Vercel cyan) */
+  --accent-50: #e0f2fe;
+  --accent-100: #bae6fd;
+  --accent-200: #7dd3fc;
+  --accent-300: #38bdf8;
+  --accent-400: #0ea5e9;
+  --accent-500: #0284c7;
+  --accent-600: #0369a1;
+  --accent-700: #075985;
+  --accent-800: #0c4a6e;
+  --accent-900: #082f49;
 
   /* Light Mode */
-  --background: var(--color-white);
-  --foreground: var(--base-800);
-  --card: var(--bright-green-50); /* changed */
-  --card-foreground: var(--base-800);
-  --popover: var(--color-white);
-  --popover-foreground: var(--base-800);
-  --primary: var(--base-950);
-  --primary-foreground: var(--color-white);
-  --secondary: var(--base-100);
-  --secondary-foreground: var(--base-800);
-  --muted: var(--base-50);
-  --muted-foreground: var(--base-600);
-  --accent: var(--base-50);
-  --accent-foreground: var(--base-800);
+  --background: var(--gray-50);
+  --foreground: var(--gray-900);
+  --card: var(--gray-100);
+  --card-foreground: var(--gray-900);
+  --popover: var(--gray-50);
+  --popover-foreground: var(--gray-900);
+  --primary: var(--gray-900);
+  --primary-foreground: var(--gray-50);
+  --secondary: var(--gray-100);
+  --secondary-foreground: var(--gray-900);
+  --muted: var(--gray-100);
+  --muted-foreground: var(--gray-600);
+  --accent: var(--accent-500);
+  --accent-foreground: var(--gray-50);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: var(--base-200);
-  --input: var(--base-300);
-  --ring: var(--base-800);
+  --border: var(--gray-200);
+  --input: var(--gray-300);
+  --ring: var(--gray-800);
 
-  /* Chart colors updated to include bright-green */
-  --chart-1: var(--bright-green-600);
-  --chart-2: var(--base-950);
-  --chart-3: var(--base-600);
-  --chart-4: var(--bright-green-400);
-  --chart-5: var(--base-300);
+  /* Chart colors - simple neutral + accent */
+  --chart-1: var(--accent-500);
+  --chart-2: var(--gray-800);
+  --chart-3: var(--gray-400);
+  --chart-4: var(--accent-300);
+  --chart-5: var(--gray-200);
 
   --radius: 0.5rem;
-  --sidebar: var(--base-100);
-  --sidebar-foreground: var(--base-800);
-  --sidebar-primary: var(--base-950);
-  --sidebar-primary-foreground: var(--color-white);
-  --sidebar-accent: var(--base-200);
-  --sidebar-accent-foreground: var(--base-800);
-  --sidebar-border: var(--base-200);
-  --sidebar-ring: var(--base-800);
+
+  /* Sidebar */
+  --sidebar: var(--gray-100);
+  --sidebar-foreground: var(--gray-900);
+  --sidebar-primary: var(--gray-900);
+  --sidebar-primary-foreground: var(--gray-50);
+  --sidebar-accent: var(--gray-200);
+  --sidebar-accent-foreground: var(--gray-900);
+  --sidebar-border: var(--gray-200);
+  --sidebar-ring: var(--gray-800);
 }
 
 .dark {
-  --background: var(--base-950);
-  --foreground: var(--base-200);
-  --card: var(--bright-green-950); /* darker green card */
-  --card-foreground: var(--bright-green-100);
-  --popover: var(--base-950);
-  --popover-foreground: var(--base-200);
-  --primary: var(--base-50);
-  --primary-foreground: var(--base-900);
-  --secondary: var(--base-800);
-  --secondary-foreground: var(--base-200);
-  --muted: var(--base-900);
-  --muted-foreground: var(--base-400);
-  --accent: var(--base-900);
-  --accent-foreground: var(--base-200);
+  --background: var(--gray-950);
+  --foreground: var(--gray-200);
+  --card: var(--gray-900);
+  --card-foreground: var(--gray-100);
+  --popover: var(--gray-900);
+  --popover-foreground: var(--gray-100);
+  --primary: var(--gray-50);
+  --primary-foreground: var(--gray-950);
+  --secondary: var(--gray-800);
+  --secondary-foreground: var(--gray-200);
+  --muted: var(--gray-800);
+  --muted-foreground: var(--gray-400);
+  --accent: var(--accent-400);
+  --accent-foreground: var(--gray-950);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: var(--base-800);
-  --input: var(--base-700);
-  --ring: var(--base-200);
+  --border: var(--gray-800);
+  --input: var(--gray-700);
+  --ring: var(--gray-200);
 
-  /* Dark mode charts use bright green prominently */
-  --chart-1: var(--bright-green-400);
-  --chart-2: var(--bright-green-600);
-  --chart-3: var(--base-200);
-  --chart-4: var(--bright-green-300);
-  --chart-5: var(--base-700);
+  /* Chart */
+  --chart-1: var(--accent-400);
+  --chart-2: var(--accent-600);
+  --chart-3: var(--gray-400);
+  --chart-4: var(--accent-300);
+  --chart-5: var(--gray-700);
 
-  --sidebar: var(--base-900);
-  --sidebar-foreground: var(--base-200);
-  --sidebar-primary: var(--base-50);
-  --sidebar-primary-foreground: var(--base-900);
-  --sidebar-accent: var(--base-800);
-  --sidebar-accent-foreground: var(--base-200);
-  --sidebar-border: var(--base-800);
-  --sidebar-ring: var(--base-200);
+  /* Sidebar */
+  --sidebar: var(--gray-900);
+  --sidebar-foreground: var(--gray-200);
+  --sidebar-primary: var(--gray-50);
+  --sidebar-primary-foreground: var(--gray-900);
+  --sidebar-accent: var(--gray-800);
+  --sidebar-accent-foreground: var(--gray-200);
+  --sidebar-border: var(--gray-800);
+  --sidebar-ring: var(--gray-200);
 }
 
 @theme inline {
-  /* Base & bright-green colors */
-  --color-base-50: var(--base-50);
-  --color-base-100: var(--base-100);
-  --color-base-200: var(--base-200);
-  --color-base-300: var(--base-300);
-  --color-base-400: var(--base-400);
-  --color-base-500: var(--base-500);
-  --color-base-600: var(--base-600);
-  --color-base-700: var(--base-700);
-  --color-base-800: var(--base-800);
-  --color-base-900: var(--base-900);
-  --color-base-950: var(--base-950);
-  --color-base-1000: var(--base-1000);
+  /* Grays */
+  --color-gray-50: var(--gray-50);
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-850: var(--gray-850);
+  --color-gray-900: var(--gray-900);
+  --color-gray-950: var(--gray-950);
+  --color-gray-1000: var(--gray-1000);
 
-  --color-bright-green-50: var(--bright-green-50);
-  --color-bright-green-100: var(--bright-green-100);
-  --color-bright-green-200: var(--bright-green-200);
-  --color-bright-green-300: var(--bright-green-300);
-  --color-bright-green-400: var(--bright-green-400);
-  --color-bright-green-500: var(--bright-green-500);
-  --color-bright-green-600: var(--bright-green-600);
-  --color-bright-green-700: var(--bright-green-700);
-  --color-bright-green-800: var(--bright-green-800);
-  --color-bright-green-900: var(--bright-green-900);
-  --color-bright-green-950: var(--bright-green-950);
+  /* Accent */
+  --color-accent-50: var(--accent-50);
+  --color-accent-100: var(--accent-100);
+  --color-accent-200: var(--accent-200);
+  --color-accent-300: var(--accent-300);
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-accent-700: var(--accent-700);
+  --color-accent-800: var(--accent-800);
+  --color-accent-900: var(--accent-900);
 
-  /* System Colors */
+  /* System */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -172,7 +176,7 @@
 
   /* Misc */
   --color-success: oklch(0.7 0.2 140);
-  --color-success-foreground: var(--base-50);
+  --color-success-foreground: var(--gray-50);
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
