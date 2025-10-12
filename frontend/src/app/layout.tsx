@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html dir="rtl" lang="fa">
+    <html dir="ltr" lang="en">
       <body className="antialiased relative min-h-screen w-screen">
         <ThemeProvider
           enableSystem

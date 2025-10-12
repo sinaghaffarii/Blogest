@@ -18,7 +18,7 @@ async function fetchBlogs(): Promise<{
 }> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getList`);
   if (!res.ok) {
-    throw new Error('دریافت مقالات با خطا مواجه شد');
+    throw new Error('Received Articles encountered by error');
   }
   return res.json();
 }
@@ -32,12 +32,10 @@ export default async function Home() {
 
   return (
     <PublicLayoutProvider>
-      <div className="w-6xl max-w-[90vw] mx-auto space-y-12">
-        <Header posts={headersPosts} />
-        <CollectionPosts posts={collectionPosts} />
-        <LatestPosts posts={latestPosts} />
-        <CallToAction />
-      </div>
+      <Header posts={headersPosts} />
+      <CollectionPosts posts={collectionPosts} />
+      <LatestPosts posts={latestPosts} />
+      <CallToAction />
     </PublicLayoutProvider>
   );
 }

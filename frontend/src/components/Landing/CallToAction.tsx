@@ -17,16 +17,17 @@ export default function CallToAction() {
 
       <div className="relative z-10 max-w-2xl p-8 col-span-2 md:col-span-1 mx-auto order-1">
         <h2 className="text-xl md:text-2xl font-bold mb-4">
-          می‌خوای آخرین مقالات رو دریافت کنی؟
+          Want to get the latest articles?
         </h2>
         <p className="mb-8 text-lg md:text-xl">
-          در خبرنامه ما عضو شو و از آخرین مقالات و آموزش‌ها باخبر باش
+          Subscribe to our newsletter and learn about the latest articles and
+          tutorials
         </p>
         <Button
           className="px-8 py-4 font-semibold transition shadow-md"
           variant="outline"
         >
-          ثبت نام در خبرنامه
+          Sign up in the newsletter
         </Button>
       </div>
     </section>

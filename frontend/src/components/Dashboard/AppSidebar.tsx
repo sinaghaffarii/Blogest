@@ -3,11 +3,9 @@
 import {
   BookOpen,
   Bot,
-  Command,
   Frame,
   Github,
   LifeBuoy,
-  Link,
   Settings2,
   SquareTerminal,
 } from 'lucide-react';

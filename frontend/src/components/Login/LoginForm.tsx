@@ -50,14 +50,14 @@ export function LoginForm({
     });
 
   return (
-    <AuthCard title="خوش آمدید" description="با حساب خود وارد شوید.">
+    <AuthCard title="Welcome" description="Sign in with your account.">
       <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-3">
-          <Label htmlFor="email">ایمیل</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
-            {...register('email', { required: 'ایمیل الزامی است.' })}
+            {...register('email', { required: 'Email is required.' })}
           />
           {errors.email && (
             <span className="text-red-500 text-sm">{errors.email.message}</span>
@@ -66,15 +66,15 @@ export function LoginForm({
 
         <div className="grid gap-3">
           <div className="flex justify-between items-center">
-            <Label htmlFor="password">رمز عبور</Label>
+            <Label htmlFor="password">Password</Label>
             <Button type="button" variant="link" onClick={onForgot}>
-              فراموش کرده‌اید؟
+              Forgot password?
             </Button>
           </div>
           <Input
             id="password"
             type="password"
-            {...register('password', { required: 'رمز عبور الزامی است.' })}
+            {...register('password', { required: 'Password is required.' })}
           />
           {errors.password && (
             <span className="text-red-500 text-sm">
@@ -84,13 +84,13 @@ export function LoginForm({
         </div>
 
         <Button disabled={isPending} type="submit">
-          {isPending ? 'در حال پردازش...' : 'ورود'}
+          {isPending ? 'Processing...' : 'Login'}
         </Button>
 
         <div className="text-center text-sm">
-          حساب کاربری ندارید!
+          Don’t have an account?
           <Button type="button" variant="link" onClick={onRegister}>
-            ثبت‌نام
+            Register
           </Button>
         </div>
       </form>

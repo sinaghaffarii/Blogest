@@ -36,7 +36,10 @@ export function VerifyEmailForm({
       {
         onSuccess: (res) => {
           if (res.status) {
-            Swal.fire({ icon: 'success', text: 'ایمیل شما تأیید شد.' });
+            Swal.fire({
+              icon: 'success',
+              text: 'Your email has been verified.',
+            });
             reset();
             onSuccess();
           }
@@ -47,16 +50,16 @@ export function VerifyEmailForm({
 
   return (
     <AuthCard
-      title="تأیید ایمیل"
-      description="کد ارسال شده به ایمیل خود را وارد کنید."
+      title="Verify Email"
+      description="Enter the code sent to your email."
     >
       <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-3">
-          <Label htmlFor="otp">کد تأیید</Label>
+          <Label htmlFor="otp">Verification Code</Label>
           <Input
             id="otp"
             type="text"
-            {...register('otp', { required: 'کد تأیید الزامی است.' })}
+            {...register('otp', { required: 'Verification code is required.' })}
           />
           {errors.otp && (
             <span className="text-red-500 text-sm">{errors.otp.message}</span>
@@ -64,11 +67,11 @@ export function VerifyEmailForm({
         </div>
 
         <Button disabled={isPending} type="submit">
-          {isPending ? 'در حال پردازش...' : 'تأیید ایمیل'}
+          {isPending ? 'Processing...' : 'Verify Email'}
         </Button>
 
         <Button type="button" variant="link" onClick={onBack}>
-          بازگشت
+          Back
         </Button>
       </form>
     </AuthCard>

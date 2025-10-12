@@ -17,7 +17,7 @@ export default function LatestPosts({ posts }: { posts: Blog[] }) {
   return (
     <section className="min-h-[300px]">
       <h2 className="font-semibold text-base md:text-lg lg:texg-xl  text-gray-900 dark:text-gray-100 underline underline-offset-[26px]">
-        آخرین مقالات
+        Last articles
       </h2>
       <Separator className="my-4" />
       <div className="grid md:grid-cols-3 gap-6">

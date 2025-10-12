@@ -39,7 +39,7 @@ export function ResetPasswordForm({
           if (res.status) {
             Swal.fire({
               icon: 'success',
-              text: 'رمز عبور با موفقیت تغییر یافت.',
+              text: 'Password has been successfully changed.',
             });
             reset();
             onSuccess();
@@ -51,16 +51,16 @@ export function ResetPasswordForm({
 
   return (
     <AuthCard
-      title="تنظیم رمز عبور جدید"
-      description="کد و رمز عبور جدید خود را وارد کنید."
+      title="Reset New Password"
+      description="Enter your verification code and new password."
     >
       <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-3">
-          <Label htmlFor="otp">کد تأیید</Label>
+          <Label htmlFor="otp">Verification Code</Label>
           <Input
             id="otp"
             type="text"
-            {...register('otp', { required: 'کد تأیید الزامی است.' })}
+            {...register('otp', { required: 'Verification code is required.' })}
           />
           {errors.otp && (
             <span className="text-red-500 text-sm">{errors.otp.message}</span>
@@ -68,13 +68,13 @@ export function ResetPasswordForm({
         </div>
 
         <div className="grid gap-3">
-          <Label htmlFor="newPassword">رمز عبور جدید</Label>
+          <Label htmlFor="newPassword">New Password</Label>
           <Input
             id="newPassword"
             type="password"
             {...register('newPassword', {
-              required: 'رمز عبور الزامی است.',
-              minLength: { value: 6, message: 'حداقل ۶ کاراکتر' },
+              required: 'Password is required.',
+              minLength: { value: 6, message: 'At least 6 characters' },
             })}
           />
           {errors.newPassword && (
@@ -85,11 +85,11 @@ export function ResetPasswordForm({
         </div>
 
         <Button disabled={isPending} type="submit">
-          {isPending ? 'در حال پردازش...' : 'تغییر رمز عبور'}
+          {isPending ? 'Processing...' : 'Change Password'}
         </Button>
 
         <Button type="button" variant="link" onClick={onBack}>
-          بازگشت
+          Back
         </Button>
       </form>
     </AuthCard>

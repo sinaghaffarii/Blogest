@@ -31,7 +31,7 @@ const Navbar = () => {
               variant="outline"
               onClick={() => router.push(RouteObject.LOGIN)}
             >
-              ثبت‌نام و ورود
+              Sign in & Sign up
             </Button>
             {/* Mobile Menu */}
             <div className="md:hidden">

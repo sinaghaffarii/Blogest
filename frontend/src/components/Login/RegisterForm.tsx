@@ -36,7 +36,7 @@ export function RegisterForm({
         if (res.status) {
           Swal.fire({
             icon: 'success',
-            text: 'کد تایید به ایمیل شما ارسال شد.',
+            text: 'A verification code has been sent to your email.',
           });
           reset();
           onVerify(data.email);
@@ -47,16 +47,16 @@ export function RegisterForm({
 
   return (
     <AuthCard
-      title="ثبت‌نام"
-      description="اطلاعات خود را برای ثبت‌نام وارد کنید."
+      title="Register"
+      description="Enter your information to create an account."
     >
       <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-3">
-          <Label htmlFor="name">نام</Label>
+          <Label htmlFor="name">Name</Label>
           <Input
             id="name"
             type="text"
-            {...register('name', { required: 'نام الزامی است.' })}
+            {...register('name', { required: 'Name is required.' })}
           />
           {errors.name && (
             <span className="text-red-500 text-sm">{errors.name.message}</span>
@@ -64,11 +64,11 @@ export function RegisterForm({
         </div>
 
         <div className="grid gap-3">
-          <Label htmlFor="email">ایمیل</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
-            {...register('email', { required: 'ایمیل الزامی است.' })}
+            {...register('email', { required: 'Email is required.' })}
           />
           {errors.email && (
             <span className="text-red-500 text-sm">{errors.email.message}</span>
@@ -76,13 +76,13 @@ export function RegisterForm({
         </div>
 
         <div className="grid gap-3">
-          <Label htmlFor="password">رمز عبور</Label>
+          <Label htmlFor="password">Password</Label>
           <Input
             id="password"
             type="password"
             {...register('password', {
-              required: 'رمز عبور الزامی است.',
-              minLength: { value: 6, message: 'حداقل ۶ کاراکتر' },
+              required: 'Password is required.',
+              minLength: { value: 6, message: 'At least 6 characters' },
             })}
           />
           {errors.password && (
@@ -93,13 +93,13 @@ export function RegisterForm({
         </div>
 
         <Button disabled={isPending} type="submit">
-          {isPending ? 'در حال پردازش...' : 'ثبت‌نام'}
+          {isPending ? 'Processing...' : 'Register'}
         </Button>
 
         <div className="text-center text-sm">
-          قبلاً حساب دارید؟
+          Already have an account?
           <Button type="button" variant="link" onClick={onLogin}>
-            ورود
+            Login
           </Button>
         </div>
       </form>

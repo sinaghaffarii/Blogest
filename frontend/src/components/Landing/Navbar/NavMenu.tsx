@@ -17,7 +17,7 @@ export const NavMenu = (props: ComponentProps<typeof NavigationMenu>) => {
   const pathname = usePathname();
   return (
     <NavigationMenu {...props}>
-      <NavigationMenuList className="gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-center data-[orientation=vertical]:justify-center flex-row-reverse">
+      <NavigationMenuList className="gap-3 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-center data-[orientation=vertical]:justify-center">
         {menuItems.map((item, idx) => (
           <NavigationMenuItem
             key={idx}

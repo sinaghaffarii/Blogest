@@ -14,9 +14,7 @@ export default function PublicLayoutProvider({
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <Navbar />
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {children}
-      </main>
+      <main className="flex- w-6xl max-w-[85vw] mx-auto space-y-12">{children}</main>
       <footer
         dir="ltr"
         className="mt-auto border-t py-6 text-center text-sm text-muted-foreground"

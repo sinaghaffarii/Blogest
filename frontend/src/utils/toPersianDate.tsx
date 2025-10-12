@@ -9,3 +9,14 @@ export const toPersianDate = (dateInput: string | Date): string => {
 
   return toPersianDigits(formatted);
 };
+export const toEnglishDate = (dateInput: string | Date): string => {
+  const date = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
+
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  return formatter.format(date);
+};

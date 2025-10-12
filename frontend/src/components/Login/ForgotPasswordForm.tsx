@@ -34,7 +34,7 @@ export function ForgotPasswordForm({
       {
         onSuccess: (res) => {
           if (res.status) {
-            Swal.fire({ icon: 'success', text: 'ایمیل بازیابی ارسال شد.' });
+            Swal.fire({ icon: 'success', text: 'Recovery email was sent.' });
             reset();
             onSuccess(data.email);
           }
@@ -44,14 +44,14 @@ export function ForgotPasswordForm({
   };
 
   return (
-    <AuthCard title="بازیابی رمز عبور" description="ایمیل خود را وارد کنید.">
+    <AuthCard title="Password Recovery" description="Enter your email.">
       <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-3">
-          <Label htmlFor="email">ایمیل</Label>
+          <Label htmlFor="email">Email</Label>
           <Input
             id="email"
             type="email"
-            {...register('email', { required: 'ایمیل الزامی است.' })}
+            {...register('email', { required: 'Email is required.' })}
           />
           {errors.email && (
             <span className="text-red-500 text-sm">{errors.email.message}</span>
@@ -59,11 +59,11 @@ export function ForgotPasswordForm({
         </div>
 
         <Button disabled={isPending} type="submit">
-          {isPending ? 'در حال پردازش...' : 'ارسال لینک بازیابی'}
+          {isPending ? 'In processing ...' : 'Send recovery link'}
         </Button>
 
         <Button type="button" variant="link" onClick={onBack}>
-          بازگشت
+          Return
         </Button>
       </form>
     </AuthCard>

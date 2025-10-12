@@ -19,65 +19,69 @@ import {
 
 function ProfileHeader() {
   return (
-    <div className="flex items-center gap-4">
-      <motion.div
-        animate={{ opacity: 1, x: 0 }}
-        initial={{ opacity: 0, x: 10 }}
-      >
-        <div className="w-28 h-28 md:w-36 md:h-36 rounded-xl overflow-hidden shadow-lg border border-border">
-          <Image
-            height={160}
-            width={160}
-            alt="پروفایل"
-            className="object-cover w-full h-full"
-            src="/images/mr-robot.jpg"
-            priority
-          />
-        </div>
-      </motion.div>
-      <div className="text-right">
-        <h1 className="text-2xl md:text-3xl font-bold">سینا غفاری</h1>
-        <p className="text-sm md:text-base text-muted-foreground">
-          توسعه‌دهنده فرانت‌اند · React / Next.js
+    <motion.div
+      animate={{ opacity: 1, y: 0 }}
+      className="flex items-center gap-6 md:gap-8"
+      initial={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border border-border">
+        <Image
+          height={160}
+          width={160}
+          alt="Profile"
+          className="object-cover w-full h-full"
+          src="/images/mr-robot.jpg"
+          priority
+        />
+      </div>
+
+      <div className="text-left flex-1">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground">
+          Sina Ghaffari
+        </h1>
+        <p className="mt-1 text-md md:text-lg text-muted-foreground">
+          Frontend Developer · React / Next.js
         </p>
-        <p className="mt-3 max-w-xl text-sm md:text-base leading-relaxed text-foreground">
-          من یک مهندس نرم‌افزار و طراح محصول با بیش از ۵ سال تجربه حرفه‌ای در
-          توسعه وب و طراحی تجربه کاربری هستم. تخصص من ساخت رابط‌های کاربری با
-          عملکرد بالا، مقیاس‌پذیر و با تمرکز بر جزئیات است. اگر به دنبال همکاری
-          دورکاری، فریلنسری یا نیمه‌وقت هستید، خوشحال می‌شوم پیام شما را دریافت
-          کنم و در خلق پروژه‌ای ارزشمند سهیم باشم.
+        <p className="mt-4 max-w-xl text-sm md:text-base leading-relaxed text-foreground">
+          I’m a software engineer and product designer with over 5 years of
+          professional experience in web development and user experience design.
+          I specialize in building high-performance, scalable, and
+          detail-oriented user interfaces. Open to remote, freelance, or
+          part-time collaboration to create meaningful products together.
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 function SummaryAndInterests() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <Card className="p-4 md:col-span-1 h-full bg-card border-border text-card-foreground">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <Card className="p-5 md:col-span-1 bg-white/10 backdrop-blur-lg border border-white/40 shadow-md transition hover">
         <CardHeader>
-          <CardTitle className="text-lg">علاقه‌مندی‌ها</CardTitle>
+          <CardTitle className="text-lg font-semibold">Interests</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap gap-2 mt-2">
-            <Badge className="py-2 px-3">بازی</Badge>
-            <Badge className="py-2 px-3">سفر</Badge>
-            <Badge className="py-2 px-3">دوچرخه‌سواری</Badge>
+          <div className="flex flex-wrap gap-3 mt-3">
+            <Badge className="py-2 px-3">Gaming</Badge>
+            <Badge className="py-2 px-3">Traveling</Badge>
+            <Badge className="py-2 px-3">Cycling</Badge>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="p-4 md:col-span-2 h-full bg-card border-border text-card-foreground">
+      <Card className="p-5 md:col-span-2 bg-white/10 backdrop-blur-lg border border-white/40 shadow-md transition hover">
         <CardHeader>
-          <CardTitle className="text-lg">خلاصه</CardTitle>
+          <CardTitle className="text-lg font-semibold">Summary</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm leading-relaxed text-foreground">
-            من در طی سال‌ها با استفاده از استک‌های مدرن مانند React، Next.js،
-            TypeScript، GraphQL و Docker پروژه‌های مقیاس‌پذیر اجرا کرده‌ام، و
-            هم‌چنین در طراحی تجربه کاربری (UX) و تعامل کاربر تمرکز دارم. هر
-            پروژه برای من فرصتی است برای آموختن و خلق چیزی تأثیرگذار.
+          <p className="text-sm md:text-base leading-relaxed text-foreground">
+            Over the years, I’ve worked on scalable projects using modern stacks
+            like React, Next.js, TypeScript, GraphQL, and Docker. I focus on
+            designing seamless user experiences (UX) and interactive interfaces.
+            Every project is an opportunity to learn, innovate, and deliver
+            value.
           </p>
         </CardContent>
       </Card>
@@ -87,36 +91,38 @@ function SummaryAndInterests() {
 
 function ExperienceCard({ exp }: { exp: (typeof experiences)[0] }) {
   return (
-    <Card className="overflow-hidden bg-card border-border text-card-foreground">
-      <div className="flex items-start justify-between p-4 md:p-6">
-        <div className="text-right">
-          <h3 className="text-lg font-semibold">{exp.company}</h3>
-          <p className="text-sm text-muted-foreground">{exp.role}</p>
-          <p className="text-xs text-muted-foreground mt-1">{exp.period}</p>
+    <motion.div className="transition-transform" whileHover={{ scale: 1.02 }}>
+      <Card className="overflow-hidden bg-white/10 backdrop-blur-md border border-white/40 shadow-md hover:shadow-lg transition-all">
+        <div className="flex items-start justify-between p-5">
+          <div className="text-left">
+            <h3 className="text-lg font-semibold">{exp.company}</h3>
+            <p className="text-sm text-muted-foreground">{exp.role}</p>
+            <p className="text-xs text-muted-foreground mt-1">{exp.period}</p>
+          </div>
         </div>
-      </div>
-      <Separator className="border-border" />
-      <CardContent>
-        <ul className="list-disc list-inside text-sm space-y-2 text-foreground">
-          {exp.bullets.map((b, idx) => (
-            <li key={idx}>{b}</li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+        <Separator className="border-border" />
+        <CardContent>
+          <ul className="list-disc list-inside text-sm space-y-2 text-foreground">
+            {exp.bullets.map((b, idx) => (
+              <li key={idx}>{b}</li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
 
 function ToolsColumn({ title, tools }: { title: string; tools: string[] }) {
   return (
-    <Card className="bg-card border-border text-card-foreground">
+    <Card className="bg-white/10 backdrop-blur-md border border-white/40 shadow-md hover:shadow-lg transition-all">
       <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 mt-2">
           {tools.map((t) => (
-            <Badge className="py-2 px-3" key={t} variant="default">
+            <Badge className="py-2 px-3" key={t}>
               {t}
             </Badge>
           ))}
@@ -128,20 +134,16 @@ function ToolsColumn({ title, tools }: { title: string; tools: string[] }) {
 
 function SkillsGrid() {
   return (
-    <section className="my-10">
-      <h2 className="text-lg font-semibold mb-4 text-foreground">مهارت‌ها</h2>
-
-      <div
-        className="flex flex-wrap gap-3"
-        style={{
-          backdropFilter: 'blur(10px)',
-        }}
-      >
+    <section className="my-12">
+      <h2 className="text-xl md:text-2xl font-semibold mb-6 text-foreground">
+        Skills
+      </h2>
+      <div className="flex flex-wrap gap-4">
         {skills.map((skill) => (
           <motion.div
-            className="rounded-sm px-4 py-2 bg-white/10 border border-white/20 text-sm text-foreground backdrop-blur-md shadow-sm transition hover:bg-white/20 hover:shadow-md cursor-default"
+            className="px-5 py-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/40 shadow-sm hover:shadow-md cursor-default text-sm md:text-base transition"
             key={skill.name}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.08 }}
           >
             {skill.name}
           </motion.div>
@@ -155,35 +157,30 @@ export default function AboutPage() {
   return (
     <PublicLayoutProvider>
       <main
-        dir="rtl"
+        dir="ltr"
         className={cn(
-          'min-h-screen p-6 md:p-10 transition-colors duration-300 space-y-6 bg-background text-foreground',
+          'min-h-screen p-6 md:p-10 transition-colors duration-300 space-y-10 bg-background text-foreground',
         )}
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-start justify-between gap-4 mb-6">
-            <ProfileHeader />
-          </div>
-
+        <div className="max-w-7xl mx-auto flex flex-col gap-10">
+          <ProfileHeader />
           <SummaryAndInterests />
 
-          <section className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="space-y-4">
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-5">
               {experiences.map((exp) => (
                 <ExperienceCard exp={exp} key={exp.id} />
               ))}
             </div>
 
-            <div className="space-y-4">
-              <ToolsColumn title="ابزارهای طراحی" tools={toolsDesign} />
-              <ToolsColumn title="ابزارهای همکاری" tools={toolsCollab} />
-              <ToolsColumn title="زبان‌ها" tools={languages} />
+            <div className="flex flex-col gap-5">
+              <ToolsColumn title="Design Tools" tools={toolsDesign} />
+              <ToolsColumn title="Collaboration Tools" tools={toolsCollab} />
+              <ToolsColumn title="Languages" tools={languages} />
             </div>
           </section>
 
           <SkillsGrid />
-
-          <div className="h-10" />
         </div>
       </main>
     </PublicLayoutProvider>
