@@ -1,9 +1,7 @@
 import React from 'react';
 
-import PublicLayoutProvider from '@/providers/PublicLayoutProvider';
-
 const Contact = () => {
-  return <PublicLayoutProvider>Contact</PublicLayoutProvider>;
+  return <div>Contact</div>;
 };
 
 export default Contact;
