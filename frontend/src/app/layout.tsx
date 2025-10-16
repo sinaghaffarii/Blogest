@@ -8,16 +8,19 @@ import Providers from './provider';
 export const metadata: Metadata = {
   title: 'Blogest',
   description: 'Generated Blog By AI',
+  icons: { icon: '/favicon.ico' },
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html dir="ltr" lang="en">
-      <body className="antialiased relative min-h-screen w-screen">
+    <html dir="ltr" lang="en" suppressHydrationWarning>
+      <head />
+      <body className="antialiased relative min-h-dvh w-full bg-background text-foreground">
         <ThemeProvider
           enableSystem
           attribute="class"

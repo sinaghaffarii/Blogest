@@ -1,41 +1,34 @@
-import type { Blog } from '@/utils/types';
+import Blogs from '@/components/landing/Blogs';
+import Navbar from '@/components/landing/Navbar';
+import Profile from '@/components/landing/Profile';
+import Tags from '@/components/landing/Tags';
 
-import CallToAction from '@/components/Landing/CallToAction';
-import CollectionPosts from '@/components/Landing/CollectionPosts';
-import Header from '@/components/Landing/Header';
-import LatestPosts from '@/components/Landing/LatestPosts';
-import PublicLayoutProvider from '@/providers/PublicLayoutProvider';
-
-async function fetchBlogs(): Promise<{
-  blogs: Blog[];
-  pagination: {
-    current: number;
-    hasNext: boolean;
-    hasPrev: boolean;
-    items: number;
-    total: number;
-  };
-}> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getList`);
-  if (!res.ok) {
-    throw new Error('Received Articles encountered by error');
-  }
-  return res.json();
-}
+// async function fetchBlogs(): Promise<{
+//   blogs: Blog[];
+//   pagination: {
+//     current: number;
+//     hasNext: boolean;
+//     hasPrev: boolean;
+//     items: number;
+//     total: number;
+//   };
+// }> {
+//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blogs/getList`);
+//   if (!res.ok) {
+//     throw new Error('Received Articles encountered by error');
+//   }
+//   return res.json();
+// }
 
 export default async function Home() {
-  const { blogs } = await fetchBlogs();
-
-  const headersPosts = blogs.slice(0, 4);
-  const collectionPosts = blogs.slice(0, 3);
-  const latestPosts = blogs.slice(3, 9);
-
   return (
-    <PublicLayoutProvider>
-      <Header posts={headersPosts} />
-      <CollectionPosts posts={collectionPosts} />
-      <LatestPosts posts={latestPosts} />
-      <CallToAction />
-    </PublicLayoutProvider>
+    <div>
+      <Navbar />
+      <section className="grid grid-cols-1 md:grid-cols-12 gap-8 place-items-center w-full max-w-6xl mx-auto mt-12">
+        <Tags />
+        <Blogs />
+        <Profile />
+      </section>
+    </div>
   );
 }
