@@ -71,7 +71,7 @@ const tagsList = [
 
 const Tags = () => {
   return (
-    <div className="w-full col-span-2 mb-auto">
+    <div className="w-full col-span-2 mb-auto space-y-8">
       <div className="flex items-center justify-start gap-4">
         <TagsIcon />
         <p>Tags</p>
