@@ -17,7 +17,7 @@ export default function BlogsPagination({
 }: {
   pagination: {
     current?: number;
-    totalPages?: number;
+    total?: number;
     hasNext?: boolean;
     hasPrev?: boolean;
   };
@@ -26,7 +26,9 @@ export default function BlogsPagination({
   const sp = useSearchParams();
 
   const current = Number(sp.get('page') ?? pagination.current ?? 1);
-  const totalPages = pagination.totalPages ?? 1;
+  const totalPages = pagination.total ?? 1;
+
+  console.log({ pagination });
 
   const go = (page: number) => {
     const params = new URLSearchParams(Object.fromEntries(sp.entries()));
