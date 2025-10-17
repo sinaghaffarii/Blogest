@@ -13,7 +13,7 @@ import React from 'react';
 
 const Profile = () => {
   return (
-    <div className="w-full col-span-3 mb-auto space-y-8 sticky">
+    <div className="w-full col-span-3 mb-auto space-y-8">
       <div className="flex items-center justify-start gap-4">
         <LaptopIcon />
         <p>Profile</p>

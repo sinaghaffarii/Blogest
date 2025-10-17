@@ -1,107 +1,66 @@
-import { SearchIcon } from 'lucide-react';
-import Image from 'next/image';
+'use client';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
-import { Card, CardContent, CardFooter, CardHeader } from '../ui/Card';
-import { Input } from '../ui/Input';
-import { Label } from '../ui/Label';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/Select';
-import { Separator } from '../ui/Separator';
-import { Switch } from '../ui/Switch';
-import { Badge } from '../ui/Badge';
-import { toEnglishDate, toPersianDate } from '@/utils/toPersianDate';
-import { Button } from '../ui/Button';
+import { useBlogs } from '@/services/blogs';
 
-const Blogs = () => {
+import { ScrollArea } from '../ui/ScrollArea';
+import { Spinner } from '../ui/Spinner';
+import BlogCard from './BlogCard';
+import Filters from './Filters';
+import BlogsPagination from './Pagination';
+
+export default function BlogsContainer() {
+  const sp = useSearchParams();
+  const q = sp.get('q') ?? undefined;
+  const category = sp.get('category') ?? undefined;
+  const page = Number(sp.get('page') ?? '1');
+  const limit = Number(sp.get('limit') ?? '3');
+  const sortOrder = (sp.get('sortOrder') as 'asc' | 'desc') ?? 'desc';
+
+  const { data, isLoading, isError } = useBlogs({
+    q,
+    category,
+    page,
+    limit,
+    sortOrder,
+  });
+
+  if (isLoading)
+    return (
+      <div className="col-span-7">
+        <Spinner />
+      </div>
+    );
+  if (isError)
+    return <div className="col-span-7 text-red-500">Error loading posts</div>;
+
+  const blogs = data?.blogs ?? [];
+  const pagination = data?.pagination ?? {
+    current: page,
+    hasNext: false,
+    hasPrev: page > 1,
+  };
+
   return (
-    <div className="w-full col-span-7 mb-auto space-y-4">
-      <div className="flex items-center justify-start flex-col">
-        <article className="flex items-center justify-start w-full me-auto mb-3">
-          <SearchIcon className="size-5 me-3" />
-          <p className="text-sm md:text-base lg:text-lg">Search</p>
-        </article>
-        <Input className="h-10 mt-4 bg-white" placeholder="Search Keyword..." />
-      </div>
-      <div className="flex items-center justify-between w-full mt-8">
-        <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a fruit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem className="capitalize" value="all">
-                all
-              </SelectItem>
-              <SelectItem className="capitalize" value="javascript">
-                javascript
-              </SelectItem>
-              <SelectItem className="capitalize" value="react">
-                react
-              </SelectItem>
-              <SelectItem className="capitalize" value="frontend">
-                frontend
-              </SelectItem>
-              <SelectItem className="capitalize" value="backend">
-                backend
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <div className="flex items-center space-x-2">
-          <Label htmlFor="airplane-mode">Asc</Label>
-          <Switch id="airplane-mode" />
-          <Label htmlFor="airplane-mode">Desc</Label>
-        </div>
-      </div>
-      <Separator />
-      <div>
-        <Card>
-          <CardHeader className="relative">
-            <Image
-              height={250}
-              width={400}
-              alt="Card_Header"
-              className="rounded-xl w-full object-contain max-h-[400px]"
-              src="/images/mr-robot.jpg"
-            />
-            <Button
-              size="sm"
-              className="absolute top-4 start-10 rounded-full text-xs md:text-sm bg-secondary"
-              variant="secondary"
-            >
-              Next.js
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <p className="text-base md:text-lg font-medium">
-                Dynamically create sitemap.xml in Next.js
-              </p>
-              <p className="text-xs md:text-sm text-gray-500">
-                {toEnglishDate(new Date())}
-              </p>
-              <p className="text-sm md:text-base font-light text-gray-500">
-                Let's load the sitemap dynamically
-              </p>
-            </div>
-          </CardContent>
-          <CardFooter className="flex items-center justify-start w-full flex-wrap gap-3">
-            <Badge variant="outline">Next.js</Badge>
-            <Badge variant="outline">Javascript</Badge>
-            <Badge variant="outline">React</Badge>
-          </CardFooter>
-        </Card>
-      </div>
+    <div className="w-full col-span-7 pb-10 space-y-8">
+      <Filters />
+      <ScrollArea className="h-screen px-4 mt-4">
+        {blogs.length === 0 ? (
+          <div className="flex flex-col items-center justify-center space-y-4 py-20">
+            <DotLottieReact src="/images/EmptyBox.json" autoplay loop />
+            <p className="text-lg text-gray-500">No blogs found!</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {blogs.map((b) => (
+              <BlogCard key={b._id} blog={b} />
+            ))}
+          </div>
+        )}
+      </ScrollArea>
+      <BlogsPagination pagination={pagination} />
     </div>
   );
-};
-
-export default Blogs;
+}
