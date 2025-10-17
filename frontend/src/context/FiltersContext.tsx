@@ -1,6 +1,13 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { createContext, use, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  use,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 export interface FiltersState {
   q?: string;
@@ -28,15 +35,18 @@ export const FiltersProvider: React.FC<{ children: React.ReactNode }> = ({
   const router = useRouter();
   const sp = useSearchParams();
 
-  const [filters, setFilters] = useState<FiltersState>({
+  const initial: FiltersState = {
     q: sp.get('q') ?? undefined,
     category: sp.get('category') ?? undefined,
     sortOrder: (sp.get('sortOrder') as 'asc' | 'desc') ?? undefined,
     tag: sp.get('tag') ?? undefined,
     page: Number(sp.get('page') ?? 1),
-  });
+  };
+
+  const [filters, setFilters] = useState<FiltersState>(initial);
 
   useEffect(() => {
+    // keep state in sync when search params change externally
     setFilters({
       q: sp.get('q') ?? undefined,
       category: sp.get('category') ?? undefined,
@@ -46,31 +56,43 @@ export const FiltersProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   }, [sp]);
 
-  const updateUrl = (newFilters: Partial<FiltersState>) => {
-    const updated = { ...filters, ...newFilters };
-    const params = new URLSearchParams();
+  // update URL based on the provided full state (not closure)
+  const updateUrl = useCallback(
+    (fullState: FiltersState) => {
+      const params = new URLSearchParams();
 
-    if (updated.q) params.set('q', updated.q);
-    if (updated.category) params.set('category', updated.category);
-    if (updated.sortOrder) params.set('sortOrder', updated.sortOrder);
-    if (updated.tag) params.set('tag', updated.tag);
-    params.set('page', String(updated.page ?? 1));
+      if (fullState.q) params.set('q', fullState.q);
+      if (fullState.category) params.set('category', fullState.category);
+      if (fullState.sortOrder) params.set('sortOrder', fullState.sortOrder);
+      if (fullState.tag) params.set('tag', fullState.tag);
+      params.set('page', String(fullState.page ?? 1));
 
-    router.push(`${window.location.pathname}?${params.toString()}`);
-  };
+      // use router.push (client navigation) — avoid window.location when possible
+      const next = `${window.location.pathname}?${params.toString()}`;
+      router.push(next);
+    },
+    [router],
+  );
 
-  const setFilter = (
-    key: keyof FiltersState,
-    value?: number | string | 'asc' | 'desc',
-  ) => {
-    setFilters((prev) => {
-      const newState = { ...prev, [key]: value === '' ? undefined : value };
-      updateUrl(newState);
-      return newState;
-    });
-  };
+  // stable setter
+  const setFilter = useCallback(
+    (key: keyof FiltersState, value?: number | string | 'asc' | 'desc') => {
+      setFilters((prev) => {
+        const normalized = value === '' ? undefined : value;
+        const newState = { ...prev, [key]: normalized };
+        // if page is not set in this change, keep it if needed; you already set page in callers when necessary
+        // ensure page is a number
+        if (typeof newState.page !== 'number' || Number.isNaN(newState.page)) {
+          newState.page = 1;
+        }
+        updateUrl(newState);
+        return newState;
+      });
+    },
+    [updateUrl],
+  );
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     const newState: FiltersState = {
       q: undefined,
       category: undefined,
@@ -80,11 +102,11 @@ export const FiltersProvider: React.FC<{ children: React.ReactNode }> = ({
     };
     setFilters(newState);
     updateUrl(newState);
-  };
+  }, [updateUrl]);
 
   const value = useMemo(
     () => ({ filters, setFilter, clearFilters }),
-    [filters],
+    [filters, setFilter, clearFilters],
   );
 
   return <FiltersContext value={value}>{children}</FiltersContext>;

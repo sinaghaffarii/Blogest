@@ -11,6 +11,32 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+const socialMediaList: {
+  id: number;
+  label: string;
+  href: string;
+  icon: React.ReactNode;
+}[] = [
+  {
+    id: 1,
+    label: 'Linkedin',
+    href: 'https://www.linkedin.com/in/sina-ghaffariii',
+    icon: <LinkedinIcon className="size-5" />,
+  },
+  {
+    id: 2,
+    label: 'Github',
+    href: 'https://github.com/sinaghaffarii',
+    icon: <GithubIcon className="size-5" />,
+  },
+  {
+    id: 3,
+    label: 'Email',
+    href: 'mailto:sinaghafari.dev@gmail.com',
+    icon: <MessageSquareIcon className="size-5" />,
+  },
+];
+
 const Profile = () => {
   return (
     <div className="w-full col-span-3 mb-auto space-y-8">
@@ -43,9 +69,11 @@ const Profile = () => {
         </div>
         <Link
           className="flex items-center justify-start gap-5 h-14 px-2 rounded-md bg-white dark:bg-slate-900  cursor-pointer"
-          href="#"
+          href="https://github.com/sinaghaffarii/Blogest"
+          rel="noopener noreferrer"
+          target="_blank"
         >
-          <FolderGit2Icon />
+          <FolderGit2Icon className="size-5" />
           <p>Blogest</p>
         </Link>
       </div>
@@ -56,33 +84,19 @@ const Profile = () => {
         </div>
 
         <ul className="p-4 rounded-md bg-white dark:bg-slate-900 space-y-6 text-gray-600 dark:text-gray-300">
-          <li>
-            <Link
-              className="flex items-center justify-start gap-5 cursor-pointer"
-              href="#"
-            >
-              <GithubIcon className="size-5" />
-              <p>Github</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex items-center justify-start gap-5 cursor-pointer"
-              href="#"
-            >
-              <MessageSquareIcon className="size-5" />
-              <p>Email</p>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex items-center justify-start gap-5 cursor-pointer"
-              href="#"
-            >
-              <LinkedinIcon className="size-5" />
-              <p>Linkedin</p>
-            </Link>
-          </li>
+          {socialMediaList.map((add) => (
+            <li key={add.id}>
+              <Link
+                className="flex items-center justify-start gap-5 cursor-pointer"
+                href={add.href}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                {add.icon}
+                <p>{add.label}</p>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

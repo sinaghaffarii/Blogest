@@ -1,7 +1,9 @@
+// components/filters/Filters.tsx
 'use client';
+
 import debounce from 'lodash.debounce';
 import { EraserIcon } from 'lucide-react';
-import React, { useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useFilters } from '@/context/FiltersContext';
 
@@ -19,21 +21,37 @@ import {
 export default function Filters() {
   const { filters, setFilter, clearFilters } = useFilters();
 
-  const onChangeQ = useMemo(
-    () =>
-      debounce((value?: string) => {
-        setFilter('q', value);
-        setFilter('page', 1);
-      }, 1000),
-    [setFilter],
+  const [qLocal, setQLocal] = useState<string>(filters.q ?? '');
+
+  const debouncedRef = useRef(
+    debounce((value?: string) => {
+      setFilter('q', value);
+      setFilter('page', 1);
+    }, 500),
   );
 
+  useEffect(() => {
+    setQLocal(filters.q ?? '');
+  }, [filters.q]);
+
+  useEffect(() => {
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      debouncedRef.current?.cancel?.();
+    };
+  }, []);
+
+  const onChangeQ = (value?: string) => {
+    setQLocal(value ?? '');
+    debouncedRef.current(value);
+  };
+
   return (
-    <form className="space-y-4 w-full">
+    <form className="space-y-4 w-full" onSubmit={(e) => e.preventDefault()}>
       <div className="flex items-center gap-3">
         <Input
           className="h-10 border-none bg-white"
-          value={filters.q ?? ''}
+          value={qLocal}
           onChange={(e) => onChangeQ(e.target.value)}
           placeholder="Search keywords..."
         />
