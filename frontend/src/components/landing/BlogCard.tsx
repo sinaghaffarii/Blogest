@@ -31,7 +31,7 @@ export default function BlogCard({ blog }: { blog: Blog }) {
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          <Link className="block" href={`/blog/${blog.slug}`}>
+          <Link className="block" href={`/blog/${blog._id}`}>
             <p className="text-lg font-medium">{blog.title}</p>
           </Link>
           <p className="text-xs md:text-sm text-gray-500">

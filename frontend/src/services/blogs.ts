@@ -61,7 +61,7 @@ export const useBlogs = (params?: {
   });
 
 // ---- Get Blog by ID ----
-export const useBlogById = (id?: string) =>
+export const useBlogById = (id: string) =>
   useQuery<Blog>({
     queryKey: ['post', id],
     queryFn: () => api.get(`/blogs/getById/${id}`).then((res) => res.data),
