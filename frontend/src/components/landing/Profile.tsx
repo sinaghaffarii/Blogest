@@ -13,12 +13,12 @@ import React from 'react';
 
 const Profile = () => {
   return (
-    <div className="w-full col-span-3 mb-auto space-y-8 sticky">
+    <div className="w-full col-span-3 mb-auto space-y-8">
       <div className="flex items-center justify-start gap-4">
         <LaptopIcon />
         <p>Profile</p>
       </div>
-      <div className="h-96 mt-4 bg-white dark:bg-slate-900 w-full rounded-md p-4 border">
+      <div className="h-96 mt-4 bg-white dark:bg-slate-900 w-full rounded-md p-4">
         <Image
           height={200}
           width={150}
@@ -42,7 +42,7 @@ const Profile = () => {
           <p>Service</p>
         </div>
         <Link
-          className="flex items-center justify-start gap-5 h-14 px-2 rounded-md bg-white dark:bg-slate-900  cursor-pointer border"
+          className="flex items-center justify-start gap-5 h-14 px-2 rounded-md bg-white dark:bg-slate-900  cursor-pointer"
           href="#"
         >
           <FolderGit2Icon />
@@ -55,7 +55,7 @@ const Profile = () => {
           <p>Service</p>
         </div>
 
-        <ul className="p-4 rounded-md bg-white dark:bg-slate-900 space-y-6 text-gray-600 dark:text-gray-300 border">
+        <ul className="p-4 rounded-md bg-white dark:bg-slate-900 space-y-6 text-gray-600 dark:text-gray-300">
           <li>
             <Link
               className="flex items-center justify-start gap-5 cursor-pointer"

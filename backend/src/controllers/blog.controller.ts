@@ -132,15 +132,12 @@ class BlogController {
         sortOrder = 'desc',
       } = req.query;
 
-      // Build filter object
       const filter: any = {};
 
-      // Category filter
       if (category) {
-        filter.categories = category;
+        filter.categories = { $in: [category] };
       }
 
-      // Author filter
       if (author) {
         if (!mongoose.Types.ObjectId.isValid(author as string)) {
           return res
@@ -150,7 +147,6 @@ class BlogController {
         filter.author = author;
       }
 
-      // Search query filter (search in title and plainText)
       if (q) {
         filter.$or = [
           { title: { $regex: q, $options: 'i' } },
@@ -158,24 +154,44 @@ class BlogController {
         ];
       }
 
-      // Pagination
-      const pageNum = parseInt(page as string);
-      const limitNum = parseInt(limit as string);
+      const pageNum = Math.max(1, Number(page) || 1);
+      const limitNum = Math.max(1, Number(limit) || 10);
       const skip = (pageNum - 1) * limitNum;
 
-      // Sorting
-      const sort: any = {};
-      sort[sortBy as string] = sortOrder === 'desc' ? -1 : 1;
+      const allowedSortFields = [
+        'createdAt',
+        'updatedAt',
+        'publishedAt',
+        'title',
+        'likesCount',
+      ];
+      const sortField = allowedSortFields.includes(sortBy as string)
+        ? (sortBy as string)
+        : 'createdAt';
+      const sort: any = { [sortField]: sortOrder === 'asc' ? 1 : -1 };
 
-      // Execute query
-      const blogs = await Blog.find(filter)
-        .populate('author', 'name email')
-        .sort(sort)
-        .skip(skip)
-        .limit(limitNum);
+      const [blogs, total] = await Promise.all([
+        Blog.find(filter)
+          .populate('author', 'name email')
+          .sort(sort)
+          .skip(skip)
+          .limit(limitNum),
+        Blog.countDocuments(filter),
+      ]);
 
-      // Get total count for pagination
-      const total = await Blog.countDocuments(filter);
+      if (blogs.length === 0) {
+        return res.json({
+          blogs: [],
+          pagination: {
+            current: pageNum,
+            total: 0,
+            items: 0,
+            hasNext: false,
+            hasPrev: pageNum > 1,
+          },
+        });
+      }
+
       const totalPages = Math.ceil(total / limitNum);
 
       res.json({
