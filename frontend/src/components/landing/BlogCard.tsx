@@ -1,4 +1,5 @@
 'use client';
+import { LaptopIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
@@ -18,10 +19,11 @@ export default function BlogCard({ blog }: { blog: Blog }) {
           <div className="">
             <Button
               size="sm"
-              className="bg-primary/40 text-gray-600 dark:text-gray-50"
+              className="bg-purple-500/40 dark:bg-green-500 text-gray-600 dark:text-gray-50"
               type="button"
-              variant="destructive"
+              variant="secondary"
             >
+              <LaptopIcon className="text-white size-5" />
               {blog.categories[0]}
             </Button>
           </div>

@@ -5,7 +5,6 @@ import React from 'react';
 
 import { useBlogs } from '@/services/blogs';
 
-import { ScrollArea } from '../ui/ScrollArea';
 import { Spinner } from '../ui/Spinner';
 import BlogCard from './BlogCard';
 import Filters from './Filters';
@@ -46,20 +45,20 @@ export default function BlogsContainer() {
   return (
     <div className="w-full col-span-7 pb-10 space-y-8">
       <Filters />
-      <ScrollArea className="h-screen px-4 mt-4">
-        {blogs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center space-y-4 py-20">
-            <DotLottieReact src="/images/EmptyBox.json" autoplay loop />
-            <p className="text-lg text-gray-500">No blogs found!</p>
-          </div>
-        ) : (
-          <div className="space-y-8">
-            {blogs.map((b) => (
-              <BlogCard key={b._id} blog={b} />
-            ))}
-          </div>
-        )}
-      </ScrollArea>
+
+      {blogs.length === 0 ? (
+        <div className="flex flex-col items-center justify-center space-y-4 py-20">
+          <DotLottieReact src="/images/EmptyBox.json" autoplay loop />
+          <p className="text-lg text-gray-500">No blogs found!</p>
+        </div>
+      ) : (
+        <div className="space-y-8">
+          {blogs.map((b) => (
+            <BlogCard key={b._id} blog={b} />
+          ))}
+        </div>
+      )}
+
       <BlogsPagination pagination={pagination} />
     </div>
   );
