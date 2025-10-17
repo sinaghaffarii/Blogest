@@ -32,7 +32,7 @@ export default function Filters() {
     <form className="space-y-4 w-full">
       <div className="flex items-center gap-3">
         <Input
-          className="h-10"
+          className="h-10 border-none bg-white"
           value={filters.q ?? ''}
           onChange={(e) => onChangeQ(e.target.value)}
           placeholder="Search keywords..."

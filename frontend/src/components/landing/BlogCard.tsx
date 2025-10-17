@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -8,34 +7,30 @@ import type { Blog } from '@/utils/types';
 import { toEnglishDate } from '@/utils/toPersianDate';
 
 import { Badge } from '../ui/Badge';
+import { Button } from '../ui/Button';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/Card';
 
 export default function BlogCard({ blog }: { blog: Blog }) {
   return (
-    <Card>
-      <CardHeader className="relative">
-        {blog.coverImage ? (
-          <Image
-            height={350}
-            width={800}
-            alt={blog.title}
-            className="rounded-xl w-full object-cover max-h-[400px]"
-            // src={`${process.env.NEXT_PUBLIC_API_URL}/${blog.coverImage}`}
-            src="/images/mr-robot.jpg"
-          />
-        ) : null}
+    <Card className="border-none">
+      <CardHeader>
         {blog.categories?.[0] && (
-          <div className="absolute top-4 start-12">
-            <Badge className="bg-blue-500" variant="destructive">
+          <div className="">
+            <Button
+              size="sm"
+              className="bg-primary/40 text-gray-600 dark:text-gray-50"
+              type="button"
+              variant="destructive"
+            >
               {blog.categories[0]}
-            </Badge>
+            </Button>
           </div>
         )}
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
           <Link className="block" href={`/blog/${blog.slug}`}>
-            <h3 className="text-lg font-semibold">{blog.title}</h3>
+            <p className="text-lg font-semibold">{blog.title}</p>
           </Link>
           <p className="text-xs text-gray-500">
             {toEnglishDate(new Date(blog.createdAt))}

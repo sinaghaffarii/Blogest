@@ -33,7 +33,7 @@ export default function Tags() {
         {tagsList.map((tag) => (
           <li key={tag}>
             <button
-              className={`px-4 py-1 rounded-full font-medium text-xs sm:text-sm ${filters.tag === tag ? 'bg-blue-500 text-white' : 'bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-300'}`}
+              className={`px-4 py-0.5 rounded-full font-medium text-xs sm:text-sm cursor-pointer hover:bg-transparent ${filters.tag === tag ? 'bg-blue-500 text-white' : 'bg-white dark:bg-slate-900 text-gray-600 dark:text-gray-300'}`}
               type="button"
               onClick={() =>
                 setFilter('tag', filters.tag === tag ? undefined : tag)
