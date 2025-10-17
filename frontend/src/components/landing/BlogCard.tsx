@@ -30,12 +30,12 @@ export default function BlogCard({ blog }: { blog: Blog }) {
       <CardContent>
         <div className="space-y-2">
           <Link className="block" href={`/blog/${blog.slug}`}>
-            <p className="text-lg font-semibold">{blog.title}</p>
+            <p className="text-lg font-medium">{blog.title}</p>
           </Link>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs md:text-sm text-gray-500">
             {toEnglishDate(new Date(blog.createdAt))}
           </p>
-          <p className="text-sm text-gray-600 line-clamp-2">
+          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
             {blog.excerpt ?? blog.plainText?.slice(0, 160)}
           </p>
         </div>
