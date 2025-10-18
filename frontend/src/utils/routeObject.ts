@@ -3,5 +3,5 @@ export const RouteObject = Object.freeze({
   ABOUT: '/about',
   BLOG: '/blog',
   CONTACT: '/contact',
-  LOGIN: '/login',
+  DASHBOARD: '/dashboard',
 });

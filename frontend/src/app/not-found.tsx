@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 
 export default function NotFound() {
   return (
-    <div className="flex items-center justify-center flex-col w-full h-[calc(100vh-4rem)]">
+    <div className="flex items-center justify-center flex-col w-full h-[calc(100vh-7rem)]">
       <h2>Not Found</h2>
       <Image
         height={400}
