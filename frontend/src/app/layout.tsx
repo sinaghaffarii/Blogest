@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
 import './globals.css';
-import Navbar from '@/components/landing/Navbar';
 import { ThemeProvider } from '@/components/ThemeProvider';
 
 import Providers from './provider';
@@ -28,10 +27,7 @@ export default function RootLayout({
           defaultTheme="system"
           disableTransitionOnChange
         >
-          <Providers>
-            <Navbar />
-            {children}
-          </Providers>
+          <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
     </html>
