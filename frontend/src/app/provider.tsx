@@ -14,11 +14,7 @@ export default function Providers({
   return (
     <QueryClientProvider client={queryClient}>
       <CookiesProvider defaultSetOptions={{ path: '/' }}>
-        <Toaster
-          position="top-center"
-          richColors
-          toastOptions={{ className: 'font-sans' }}
-        />
+        <Toaster position="top-center" richColors />
         {children}
       </CookiesProvider>
     </QueryClientProvider>

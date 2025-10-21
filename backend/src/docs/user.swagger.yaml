@@ -175,7 +175,7 @@ components:
       properties:
         name:
           type: string
-          example: John Doe
+          example: Sina Dev
         role:
           type: string
           enum: [reader, admin]
@@ -195,7 +195,7 @@ components:
           example: user@example.com
         name:
           type: string
-          example: John Doe
+          example: Sina Dev
         role:
           type: string
           example: reader

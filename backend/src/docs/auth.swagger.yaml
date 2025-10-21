@@ -235,7 +235,7 @@ components:
           example: password123
         name:
           type: string
-          example: John Doe
+          example: Sina Dev
     LoginDto:
       type: object
       required:
@@ -307,7 +307,7 @@ components:
               example: user@example.com
             name:
               type: string
-              example: John Doe
+              example: Sina Dev
     LoginResponse:
       type: object
       properties:
@@ -331,7 +331,7 @@ components:
               example: user@example.com
             name:
               type: string
-              example: John Doe
+              example: Sina Dev
             role:
               type: string
               example: reader
