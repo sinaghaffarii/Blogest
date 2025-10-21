@@ -14,7 +14,6 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/ui/InputOtp';
-import { Spinner } from '@/components/ui/Spinner';
 import useOtpTimer from '@/hooks/useOtpTimer';
 import { useVerifyEmail } from '@/services/auth';
 

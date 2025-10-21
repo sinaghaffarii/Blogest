@@ -4,11 +4,18 @@ import * as React from 'react';
 import { Dialog, DialogContent } from '@/components/ui/Dialog';
 import { useAuthenticateContext } from '@/context/AuthenticateContext';
 
+import { ForgotPasswordForm } from './ForgotPasswordForm';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import { ResetPasswordForm } from './ResetPasswordForm';
 import VerifyOtpForm from './VerifyOtpForm';
 
-type Step = 'login' | 'register' | 'verifyOtp';
+type Step =
+  | 'forgotPassword'
+  | 'login'
+  | 'register'
+  | 'resetPassword'
+  | 'verifyOtp';
 
 export default function AuthenticateDialog() {
   const { open, setOpen } = useAuthenticateContext();
@@ -18,15 +25,24 @@ export default function AuthenticateDialog() {
   const goToLogin = () => setStep('login');
   const goToRegister = () => setStep('register');
   const goToVerifyOtp = (em: string) => {
-    console.log({ emailValue: em });
     setEmail(em);
     setStep('verifyOtp');
+  };
+  const goToForgotPassword = () => setStep('forgotPassword');
+  const goToResetPassword = (em: string) => {
+    setEmail(em);
+    setStep('resetPassword');
   };
 
   const formHandlerSteps = (stepValue: Step) => {
     switch (stepValue) {
       case 'login':
-        return <LoginForm onRegister={goToRegister} />;
+        return (
+          <LoginForm
+            onForgotPassword={goToForgotPassword}
+            onRegister={goToRegister}
+          />
+        );
 
       case 'register':
         return (
@@ -43,12 +59,25 @@ export default function AuthenticateDialog() {
             onSuccess={goToLogin}
           />
         );
+      case 'forgotPassword':
+        return (
+          <ForgotPasswordForm
+            onBack={goToLogin}
+            onSuccess={goToResetPassword}
+          />
+        );
+      case 'resetPassword':
+        return (
+          <ResetPasswordForm
+            email={email!}
+            onBack={goToForgotPassword}
+            onSuccess={goToLogin}
+          />
+        );
       default:
         return null;
     }
   };
-
-  console.log({ step });
 
   return (
     <Dialog onOpenChange={setOpen} open={open}>

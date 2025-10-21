@@ -22,9 +22,13 @@ import { RouteObject } from '@/utils/routeObject';
 
 interface LoginFormProps {
   onRegister: () => void;
+  onForgotPassword: () => void;
 }
 
-export default function LoginForm({ onRegister }: LoginFormProps) {
+export default function LoginForm({
+  onRegister,
+  onForgotPassword,
+}: LoginFormProps) {
   const router = useRouter();
   const [, setCookie] = useCookies(['isAuth']);
   const { mutate: login, isPending } = useLogin();
@@ -90,14 +94,24 @@ export default function LoginForm({ onRegister }: LoginFormProps) {
           </div>
         </div>
 
-        <Button
-          className="me-auto p-0 text-sm"
-          type="button"
-          variant="link"
-          onClick={onRegister}
-        >
-          Don't have an account? Register
-        </Button>
+        <div className="flex items-center justify-start flex-col">
+          <Button
+            className="me-auto p-0 text-sm text-primary hover:text-primary/80"
+            type="button"
+            variant="link"
+            onClick={onForgotPassword}
+          >
+            Forgot your password?
+          </Button>
+          <Button
+            className="me-auto p-0 text-sm"
+            type="button"
+            variant="link"
+            onClick={onRegister}
+          >
+            Don't have an account? Register
+          </Button>
+        </div>
       </div>
 
       <DialogFooter>
