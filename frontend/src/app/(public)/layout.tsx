@@ -11,7 +11,7 @@ export default function PublicLayout({
     <AuthenticateProvider>
       <Navbar />
       <AuthenticateDialog />
-      <main className="min-h-screen w-full">{children}</main>
+      <main className="min-h-[100svh] overflow-y-auto">{children}</main>
     </AuthenticateProvider>
   );
 }

@@ -19,6 +19,7 @@ import { Label } from '@/components/ui/Label';
 import { Spinner } from '@/components/ui/Spinner';
 import { useLogin } from '@/services/auth';
 import { RouteObject } from '@/utils/routeObject';
+import { useAuthenticateContext } from '@/context/AuthenticateContext';
 
 interface LoginFormProps {
   onRegister: () => void;
@@ -30,7 +31,9 @@ export default function LoginForm({
   onForgotPassword,
 }: LoginFormProps) {
   const router = useRouter();
-  const [, setCookie] = useCookies(['isAuth']);
+  const { setOpen } = useAuthenticateContext();
+  const [, setCookieAuth] = useCookies(['isAuth']);
+  const [, setCookieRole] = useCookies(['userRole']);
   const { mutate: login, isPending } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -44,8 +47,10 @@ export default function LoginForm({
       onSuccess: (res) => {
         if (res.status) {
           toast.success(res.message);
-          setCookie('isAuth', res.user.email, { path: '/' });
+          setCookieAuth('isAuth', res.user.email, { path: '/' });
+          setCookieRole('userRole', res.user.role, { path: '/' });
           router.push(RouteObject.DASHBOARD);
+          setOpen(false);
         }
       },
       onError: () => toast.error('Login failed'),

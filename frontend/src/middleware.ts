@@ -4,8 +4,9 @@ import { NextResponse } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const isAuth = req.cookies.get('isAuth')?.value;
+  const role = req.cookies.get('userRole')?.value;
 
-  // Ignore internal routes
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
@@ -15,21 +16,26 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const isAuth = req.cookies.get('isAuth')?.value;
-  const url = req.nextUrl.clone();
-
-  if (!isAuth && url.pathname.startsWith('/dashboard')) {
-    url.pathname = '/';
-    const redirectResponse = NextResponse.redirect(new URL('/', req.url));
-    redirectResponse.headers.set('x-middleware-cache', 'no-cache');
-    return redirectResponse;
+  if (!isAuth && pathname.startsWith('/dashboard')) {
+    const redirect = NextResponse.redirect(new URL('/', req.url));
+    redirect.headers.set('x-middleware-cache', 'no-cache');
+    return redirect;
   }
 
-  if (isAuth && url.pathname === '/') {
-    url.pathname = '/dashboard';
-    const redirectResponse = NextResponse.redirect(url);
-    redirectResponse.headers.set('x-middleware-cache', 'no-cache');
-    return redirectResponse;
+  if (pathname.startsWith('/dashboard')) {
+    if (role === 'reader') {
+      const redirect = NextResponse.redirect(new URL('/', req.url));
+      redirect.headers.set('x-middleware-cache', 'no-cache');
+      return redirect;
+    }
+
+    if (pathname.startsWith('/dashboard/users') && role !== 'admin') {
+      const redirect = NextResponse.redirect(
+        new URL('/dashboard/blogs', req.url),
+      );
+      redirect.headers.set('x-middleware-cache', 'no-cache');
+      return redirect;
+    }
   }
 
   const response = NextResponse.next();

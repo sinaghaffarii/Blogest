@@ -43,7 +43,7 @@ class Server {
       origin:
         process.env.NODE_ENV === 'production'
           ? ['https://yourdomain.com']
-          : ['http://localhost:3000', 'http://192.168.56.1:3000'],
+          : ['http://localhost:3000', 'http://192.168.100.9:3000'],
       credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],

@@ -11,6 +11,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { RouteObject } from '@/utils/routeObject';
+
 const socialMediaList: {
   id: number;
   label: string;
@@ -39,67 +41,91 @@ const socialMediaList: {
 
 const Profile = () => {
   return (
-    <div className="w-full col-span-3 mb-auto space-y-8">
-      <div className="flex items-center justify-start gap-4">
-        <LaptopIcon />
-        <p>Profile</p>
-      </div>
-      <div className="h-96 mt-4 bg-white dark:bg-slate-900 w-full rounded-md p-4">
-        <Image
-          height={200}
-          width={150}
-          alt="profile image"
-          className="object-contain w-full h-8/12"
-          src="/images/profile.png"
-        />
-        <div className="flex items-center justify-center flex-col w-full mx-auto mt-4">
-          <p className="text-sm md:text-base font-bold text-gray-950 dark:text-gray-200">
-            Sina Ghaffari
-          </p>
-          <p className="text-sm md:text-base">Front end developer</p>
-          <p className="font-medium text-base mt-3">
-            I develop everything using Javascript.
-          </p>
+    <>
+      <Link
+        className="md:hidden flex items-center justify-between w-full bg-white dark:bg-slate-900 p-4 rounded-md"
+        href={RouteObject.ABOUT}
+      >
+        <div className="flex items-center gap-4">
+          <Image
+            height={48}
+            width={48}
+            alt="profile"
+            className="rounded-full object-cover"
+            src="/images/profile.png"
+          />
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Sina Ghaffari</p>
+            <p className="text-sm text-gray-500">Front-end Developer</p>
+          </div>
         </div>
-      </div>
-      <div className="space-y-4">
-        <div className="flex items-center justify-start gap-4">
-          <StarIcon className="size-5 text-yellow-500" />
-          <p>Service</p>
-        </div>
-        <Link
-          className="flex items-center justify-start gap-5 h-14 px-2 rounded-md bg-white dark:bg-slate-900  cursor-pointer"
-          href="https://github.com/sinaghaffarii/Blogest"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <FolderGit2Icon className="size-5" />
-          <p>Blogest</p>
-        </Link>
-      </div>
-      <div className="space-y-4">
-        <div className="flex items-center justify-start gap-4 text-gray-600 dark:text-gray-300">
-          <HeadsetIcon className="size-5" />
-          <p>Service</p>
-        </div>
+      </Link>
 
-        <ul className="p-4 rounded-md bg-white dark:bg-slate-900 space-y-6 text-gray-600 dark:text-gray-300">
-          {socialMediaList.map((add) => (
-            <li key={add.id}>
-              <Link
-                className="flex items-center justify-start gap-5 cursor-pointer"
-                href={add.href}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {add.icon}
-                <p>{add.label}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      <Link
+        className="hidden md:block w-full col-span-3 mb-auto space-y-8"
+        href={RouteObject.ABOUT}
+      >
+        <div className="flex items-center justify-start gap-4">
+          <LaptopIcon />
+          <p>Profile</p>
+        </div>
+        <div className="h-96 mt-4 bg-white dark:bg-slate-900 w-full rounded-md p-4">
+          <Image
+            height={200}
+            width={150}
+            alt="profile image"
+            className="object-contain w-full h-8/12"
+            src="/images/profile.png"
+          />
+          <div className="flex items-center justify-center flex-col w-full mx-auto mt-4">
+            <p className="text-sm md:text-base font-bold text-gray-950 dark:text-gray-200">
+              Sina Ghaffari
+            </p>
+            <p className="text-sm md:text-base">Front end developer</p>
+            <p className="font-medium text-base mt-3">
+              I develop everything using Javascript.
+            </p>
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="flex items-center justify-start gap-4">
+            <StarIcon className="size-5 text-yellow-500" />
+            <p>Service</p>
+          </div>
+          <Link
+            className="flex items-center justify-start gap-5 h-14 px-2 rounded-md bg-white dark:bg-slate-900  cursor-pointer"
+            href="https://github.com/sinaghaffarii/Blogest"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <FolderGit2Icon className="size-5" />
+            <p>Blogest</p>
+          </Link>
+        </div>
+        <div className="space-y-4">
+          <div className="flex items-center justify-start gap-4 text-gray-600 dark:text-gray-300">
+            <HeadsetIcon className="size-5" />
+            <p>Service</p>
+          </div>
+
+          <ul className="p-4 rounded-md bg-white dark:bg-slate-900 space-y-6 text-gray-600 dark:text-gray-300">
+            {socialMediaList.map((add) => (
+              <li key={add.id}>
+                <Link
+                  className="flex items-center justify-start gap-5 cursor-pointer"
+                  href={add.href}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {add.icon}
+                  <p>{add.label}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Link>
+    </>
   );
 };
 
