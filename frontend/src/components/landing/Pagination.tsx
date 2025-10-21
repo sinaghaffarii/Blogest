@@ -28,8 +28,6 @@ export default function BlogsPagination({
   const current = Number(sp.get('page') ?? pagination.current ?? 1);
   const totalPages = pagination.total ?? 1;
 
-  console.log({ pagination });
-
   const go = (page: number) => {
     const params = new URLSearchParams(Object.fromEntries(sp.entries()));
     if (page <= 1) params.delete('page');

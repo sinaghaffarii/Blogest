@@ -1,5 +1,3 @@
-// ---- Types ----
-
 export interface Pagination {
   current: number;
   total: number;
@@ -30,4 +28,13 @@ export interface Blog {
   publishedAt?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export type UserRole = 'admin' | 'author' | 'reader';
+export interface User {
+  _id: string;
+  name: string;
+  email?: string;
+  role: UserRole;
+  avatar?: string;
 }

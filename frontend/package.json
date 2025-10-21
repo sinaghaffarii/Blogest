@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.14.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -36,6 +36,7 @@
     "date-fns-jalali": "4.1.0-0",
     "framer-motion": "^12.23.22",
     "html-react-parser": "^5.2.7",
+    "input-otp": "^1.4.2",
     "lodash.debounce": "^4.0.8",
     "lottie-react": "^2.4.1",
     "lucide-react": "0.544.0",

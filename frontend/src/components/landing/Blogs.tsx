@@ -3,6 +3,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
+import { useFilters } from '@/context/FiltersContext';
 import { useBlogs } from '@/services/blogs';
 
 import { Spinner } from '../ui/Spinner';
@@ -11,6 +12,7 @@ import Filters from './Filters';
 import BlogsPagination from './Pagination';
 
 export default function BlogsContainer() {
+  const { filters, setFilter } = useFilters();
   const sp = useSearchParams();
   const q = sp.get('q') ?? undefined;
   const category = sp.get('category') ?? undefined;
@@ -43,9 +45,23 @@ export default function BlogsContainer() {
   };
 
   return (
-    <div className="w-full col-span-7 pb-10 space-y-8">
+    <div className="w-full col-span-12 md:col-span-7 order-3 pb-10 space-y-8">
       <Filters />
-
+      <ul className="mt-4 flex flex-wrap md:hidden gap-5">
+        {['Javascript', 'React', 'Algorithm', 'Data Structure'].map((tag) => (
+          <li key={tag}>
+            <button
+              className={`font-medium text-sm text-gray-500 cursor-pointer hover:bg-transparent `}
+              type="button"
+              onClick={() =>
+                setFilter('tag', filters.tag === tag ? undefined : tag)
+              }
+            >
+              {tag}
+            </button>
+          </li>
+        ))}
+      </ul>
       {blogs.length === 0 ? (
         <div className="flex flex-col items-center justify-center space-y-4 py-20">
           <DotLottieReact src="/images/EmptyBox.json" autoplay loop />
