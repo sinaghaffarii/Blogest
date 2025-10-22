@@ -4,10 +4,11 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
-  Sparkles,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import {
@@ -26,6 +27,13 @@ import {
   useSidebar,
 } from '@/components/ui/Sidebar';
 
+import { Button } from '../ui/Button';
+import { useLogout } from '@/services/auth';
+
+const enum ThemeEnum {
+  DARK = 'dark',
+  LIGHT = 'light',
+}
 export function NavUser({
   user,
 }: {
@@ -35,7 +43,9 @@ export function NavUser({
     avatar: string;
   };
 }) {
+  const { theme, setTheme } = useTheme();
   const { isMobile } = useSidebar();
+  const { mutate: logout, isPending: logoutPending } = useLogout();
 
   return (
     <SidebarMenu>
@@ -63,7 +73,7 @@ export function NavUser({
             side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
+            <DropdownMenuLabel className="p-0 font-normal flex items-center justify-between">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage alt={user.name} src={user.avatar} />
@@ -74,31 +84,35 @@ export function NavUser({
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={() =>
+                  setTheme(
+                    theme === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK,
+                  )
+                }
+              >
+                <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                <span className="sr-only">change theme</span>
+              </Button>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
+
               <DropdownMenuItem>
                 <Bell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem disabled={logoutPending} onClick={() => logout()}>
               <LogOut />
               Log out
             </DropdownMenuItem>

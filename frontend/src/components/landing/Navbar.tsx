@@ -19,13 +19,14 @@ const Navbar = () => {
         <div className="grid grid-cols-3 gap-3 place-items-center">
           <ModeToggle />
           <Button
+            className="!p-2.5"
             type="button"
             variant="outline"
             onClick={() => setOpen(!open)}
           >
             <UserIcon
               size="icon"
-              className="h-[1rem] w-[1rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
+              className="h-[1rem] w-[1rem] scale-100 rotate-0 transition-all"
             />
           </Button>
           <Link href={RouteObject.ABOUT}>About</Link>

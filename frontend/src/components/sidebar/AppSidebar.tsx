@@ -1,23 +1,11 @@
 'use client';
 
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from 'lucide-react';
+import { BookOpen, Bot, Settings2, SquareTerminal, User } from 'lucide-react';
 import * as React from 'react';
 
 import { NavMain } from '@/components/sidebar/NavMain';
 import { NavProjects } from '@/components/sidebar/NavProjects';
 import { NavUser } from '@/components/sidebar/NavUser';
-import { TeamSwitcher } from '@/components/sidebar/TeamSwitcher';
 import {
   Sidebar,
   SidebarContent,
@@ -26,132 +14,74 @@ import {
   SidebarRail,
 } from '@/components/ui/Sidebar';
 
-// This is sample data.
+import { Avatar } from '../ui/Avatar';
+
 const data = {
   user: {
-    name: 'shadcn',
+    name: 'Sina Ghaffari',
     email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    avatar: '/images/cat.jpg',
   },
-  teams: [
-    {
-      name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
-    },
-    {
-      name: 'Acme Corp.',
-      logo: AudioWaveform,
-      plan: 'Startup',
-    },
-    {
-      name: 'Evil Corp.',
-      logo: Command,
-      plan: 'Free',
-    },
-  ],
   navMain: [
     {
-      title: 'Playground',
+      title: 'Analytics & Monitoring',
       url: '#',
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: 'History',
+          title: 'Website Analytics',
           url: '#',
         },
         {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
+          title: 'Google Analytics',
           url: '#',
         },
       ],
     },
     {
-      title: 'Models',
+      title: 'User Management',
       url: '#',
       icon: Bot,
       items: [
         {
-          title: 'Genesis',
-          url: '#',
-        },
-        {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
+          title: 'Users',
           url: '#',
         },
       ],
     },
     {
-      title: 'Documentation',
+      title: 'Content Management',
       url: '#',
       icon: BookOpen,
       items: [
         {
-          title: 'Introduction',
+          title: 'Blogs',
           url: '#',
         },
         {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
+          title: 'Comments',
           url: '#',
         },
       ],
     },
     {
-      title: 'Settings',
+      title: 'System & Logs',
       url: '#',
       icon: Settings2,
       items: [
         {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
+          title: 'Winston Logs',
           url: '#',
         },
       ],
     },
   ],
-  projects: [
+  Setting: [
     {
-      name: 'Design Engineering',
+      name: 'Profile',
       url: '#',
-      icon: Frame,
-    },
-    {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
-    },
-    {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
+      icon: User,
     },
   ],
 };
@@ -160,11 +90,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <div className="flex items-center gap-2">
+          <Avatar className="bg-primary text-white rounded-md size-8 flex items-center justify-center m-auto">
+            <p>SG</p>
+          </Avatar>
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-medium">Panel</span>
+            <span className="truncate text-xs">Sina Ghaffari</span>
+          </div>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects projects={data.Setting} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
