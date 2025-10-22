@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 
 import { NextResponse } from 'next/server';
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const isAuth = req.cookies.get('isAuth')?.value;
   const role = req.cookies.get('userRole')?.value;
