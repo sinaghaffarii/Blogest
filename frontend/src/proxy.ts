@@ -16,22 +16,22 @@ export function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!isAuth && pathname.startsWith('/dashboard')) {
+  if (!isAuth && pathname.startsWith('/websiteAnalytics')) {
     const redirect = NextResponse.redirect(new URL('/', req.url));
     redirect.headers.set('x-middleware-cache', 'no-cache');
     return redirect;
   }
 
-  if (pathname.startsWith('/dashboard')) {
+  if (pathname.startsWith('/websiteAnalytics')) {
     if (role === 'reader') {
       const redirect = NextResponse.redirect(new URL('/', req.url));
       redirect.headers.set('x-middleware-cache', 'no-cache');
       return redirect;
     }
 
-    if (pathname.startsWith('/dashboard/users') && role !== 'admin') {
+    if (pathname.startsWith('/websiteAnalytics/users') && role !== 'admin') {
       const redirect = NextResponse.redirect(
-        new URL('/dashboard/blogs', req.url),
+        new URL('/websiteAnalytics/blogs', req.url),
       );
       redirect.headers.set('x-middleware-cache', 'no-cache');
       return redirect;
@@ -44,5 +44,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/dashboard/:path*'],
+  matcher: ['/', '/websiteAnalytics/:path*'],
 };

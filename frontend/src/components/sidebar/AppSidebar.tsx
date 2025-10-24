@@ -13,6 +13,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/components/ui/Sidebar';
+import { RouteObject } from '@/utils/routeObject';
 
 import { Avatar } from '../ui/Avatar';
 
@@ -31,11 +32,11 @@ const data = {
       items: [
         {
           title: 'Website Analytics',
-          url: '#',
+          url: RouteObject.WebsiteAnalytics,
         },
         {
           title: 'Google Analytics',
-          url: '#',
+          url: RouteObject.GoogleAnalytics,
         },
       ],
     },
@@ -46,7 +47,7 @@ const data = {
       items: [
         {
           title: 'Users',
-          url: '#',
+          url: RouteObject.Users,
         },
       ],
     },
@@ -57,11 +58,11 @@ const data = {
       items: [
         {
           title: 'Blogs',
-          url: '#',
+          url: RouteObject.Blogs,
         },
         {
           title: 'Comments',
-          url: '#',
+          url: RouteObject.Comments,
         },
       ],
     },
@@ -72,7 +73,7 @@ const data = {
       items: [
         {
           title: 'Winston Logs',
-          url: '#',
+          url: RouteObject.WinstonLogs,
         },
       ],
     },
@@ -80,7 +81,7 @@ const data = {
   Setting: [
     {
       name: 'Profile',
-      url: '#',
+      url: RouteObject.Profile,
       icon: User,
     },
   ],

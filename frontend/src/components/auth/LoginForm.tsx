@@ -49,7 +49,7 @@ export default function LoginForm({
           toast.success(res.message);
           setCookieAuth('isAuth', res.user.email, { path: '/' });
           setCookieRole('userRole', res.user.role, { path: '/' });
-          router.push(RouteObject.DASHBOARD);
+          router.push(RouteObject.WebsiteAnalytics);
           setOpen(false);
         }
       },

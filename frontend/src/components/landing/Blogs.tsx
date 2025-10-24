@@ -8,8 +8,8 @@ import { useBlogs } from '@/services/blogs';
 
 import { Spinner } from '../ui/Spinner';
 import BlogCard from './BlogCard';
+import BlogsPagination from './BlogPagination';
 import Filters from './Filters';
-import BlogsPagination from './Pagination';
 
 export default function BlogsContainer() {
   const { filters, setFilter } = useFilters();

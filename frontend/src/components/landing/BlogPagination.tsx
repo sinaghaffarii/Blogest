@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
 
 import {
   Pagination,
@@ -10,7 +9,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
+} from '@/components/ui/Pagination';
 
 export default function BlogsPagination({
   pagination,
