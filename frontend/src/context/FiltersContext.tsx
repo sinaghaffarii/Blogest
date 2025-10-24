@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 
-export interface FiltersState {
+interface FiltersState {
   q?: string;
   category?: string;
   sortOrder?: 'asc' | 'desc';

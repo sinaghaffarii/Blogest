@@ -4,7 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 import DataTable from '@/components/DataTable';
 
-export interface Payment {
+interface Payment {
   id: string;
   amount: number;
   status: 'failed' | 'pending' | 'processing' | 'success';
