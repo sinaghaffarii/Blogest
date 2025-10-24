@@ -26,7 +26,7 @@ export default function DashboardLayout({
             <DynamicBreadcrumb />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-10 bg-gradient-to-b from-emerald-50 via-rose-50 to-sky-50 dark:from-[#0a0a0a] dark:via-[#111] dark:to-[#0a0a0a] text-foreground p-6 transition-colors">
+        <div className="flex flex-1 flex-col gap-10 bg-gradient-to-b from-emerald-50 via-rose-50 to-sky-50 dark:from-[#0a0a0a] dark:via-[#111] dark:to-[#0a0a0a] text-foreground p-6 transition-colors max-w-7xl">
           {children ?? (
             <div className="grid auto-rows-min gap-4 md:grid-cols-3">
               <div className="bg-muted/50 aspect-video rounded-xl" />
