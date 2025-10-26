@@ -5,10 +5,12 @@ import type { ColumnDef } from '@tanstack/react-table';
 import {
   CheckCircleIcon,
   PenBoxIcon,
+  PlusIcon,
   RefreshCwIcon,
   Trash2Icon,
   XCircleIcon,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import type { Blog } from '@/utils/types';
 
@@ -18,7 +20,9 @@ import { Button } from '@/components/ui/Button';
 import { useBlogs } from '@/services/blogs';
 import { toEnglishDate } from '@/utils/toPersianDate';
 
-export const columns: ColumnDef<Blog>[] = [
+export const columns = (
+  router: ReturnType<typeof useRouter>,
+): ColumnDef<Blog>[] => [
   {
     accessorFn: (row) => row.author?.name ?? '--',
     id: 'author',
@@ -74,12 +78,18 @@ export const columns: ColumnDef<Blog>[] = [
   {
     id: 'actions',
     header: 'Actions',
-    cell: () => (
+    cell: ({ cell }) => (
       <div className="flex items-center justify-center gap-4 w-[150px]">
         <Button className="w-fit" variant="destructive">
           <Trash2Icon />
         </Button>
-        <Button className="w-fit" variant="default">
+        <Button
+          className="w-fit"
+          variant="default"
+          onClick={() =>
+            router.push(`/blogs/config?id=${encodeURIComponent(cell.id)}`)
+          }
+        >
           <PenBoxIcon />
         </Button>
       </div>
@@ -87,6 +97,7 @@ export const columns: ColumnDef<Blog>[] = [
   },
 ];
 const Blogs = () => {
+  const router = useRouter();
   const { data, isPending, isError, error, refetch } = useBlogs();
 
   if (isPending) return <Loading />;
@@ -111,7 +122,11 @@ const Blogs = () => {
 
   return (
     <div>
-      <DataTable data={data?.blogs ?? []} columns={columns} />
+      <Button onClick={() => router.push('/blogs/config')}>
+        Add Blog
+        <PlusIcon />
+      </Button>
+      <DataTable data={data?.blogs ?? []} columns={columns(router)} />
     </div>
   );
 };
